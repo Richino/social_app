@@ -102,7 +102,7 @@ export default function Page() {
 						<span>{loading ? "Loading..." : "Login"}</span>
 					</button>
 					<div className="my-5 ">
-						<span className="dark:text-neutral-200">Don't have an account? </span>
+						<span className="dark:text-neutral-200">Dont have an account? </span>
 						<Link href={"/register"} className="text-violet-600">
 							Sign up
 						</Link>
