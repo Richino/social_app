@@ -84,10 +84,7 @@ input:focus {
 	body {
 		font-size: 16px;
 	}
-	html {
-		height: fill-available;
-		height: -webkit-fill-available;
-	}
+	
 	h1 {
 		font-size: 24px;
 	}

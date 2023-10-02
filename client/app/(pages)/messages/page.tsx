@@ -18,7 +18,7 @@ export default function Page() {
 	const [socketConnected, setSocketConnected] = useState<boolean>(false);
 	const [dataFetched, setDataFetch] = useState<boolean>(false);
 	const instance = axios.create({
-		baseURL: "https://needless-pest-production.up.railway.app/",
+		baseURL: process.env.url,
 		withCredentials: true,
 	});
 	async function fetchData() {
@@ -37,7 +37,7 @@ export default function Page() {
 		}
 	}, [messageIndex]);
 	useEffect(() => {
-		const newSocket = io("ws://localhost:4000/messages", { auth: { id: user.user?._id } });
+		const newSocket = io(`${process.env.socket}`, { auth: { id: user.user?._id } });
 		setSocket(newSocket);
 		if (!dataFetched) {
 			fetchData();

@@ -4,8 +4,7 @@ import Gallery from "../../../components/common/gallery";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { cookies } from "next/headers";
-import { setCookie, getCookie } from "cookies-next";
+
 
 export default function Page() {
 	const router = useRouter();
@@ -18,7 +17,7 @@ export default function Page() {
 		password: "",
 	});
 	const instance = axios.create({
-		baseURL: "https://needless-pest-production.up.railway.app/",
+		baseURL: process.env.url,
 		withCredentials: true,
 	});
 
@@ -72,6 +71,7 @@ export default function Page() {
 					<div className="flex flex-col space-y-1 ">
 						<span className="dark:text-neutral-200">Password</span>
 						<input
+							autoComplete="off"
 							className="rounded-lg border border-neutral-200 p-2 placeholder:text-xs placeholder:text-neutral-400 dark:border-neutral-800 dark:bg-neutral-950 dark:text-neutral-200"
 							type="password"
 							placeholder="password"

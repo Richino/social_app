@@ -1,11 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: false,
-	darkMode: ["class", '[data-mode="dark"]'],
-	optimizeCss: true,
-	experimental: {
-		appDir: true,
-	},
+	
 	images: {
 		domains: ["firebasestorage.googleapis.com", "cloudflare-ipfs.com"],
 	},

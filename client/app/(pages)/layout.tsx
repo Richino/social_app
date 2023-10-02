@@ -39,7 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 		isErrorOpen,
 	} = useContext(App);
 	const instance = axios.create({
-		baseURL: "https://needless-pest-production.up.railway.app/",
+		baseURL: process.env.url,
 		withCredentials: true,
 	});
 
@@ -53,12 +53,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 			await instance
 				.get("/app")
 				.then((res) => {
-               console.log(res)
 					setNotifications({ ...notifications, loading: false, data: res.data.notifications });
 					setUser({ ...user, loading: false, user: res.data.user, feed: res.data.feeds });
 				})
 				.catch(() => {
-               console.log(1)
 					setUser({ ...user, loading: false, user: null });
 					if (pathname !== "/register") return router.push("/login");
 				});

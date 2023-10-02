@@ -30,15 +30,16 @@ export default function PostFeed(props: PostFeedProps) {
 				<BsThreeDots size={16} className="hover:cursor-pointer" />
 			</div>
 
-			<div className="relative aspect-square w-full overflow-hidden bg-black hover:cursor-pointer tablet:phone:rounded-none" onClick={handlePostClick}>
+			<div className="relative h-[398px] w-[398px] overflow-hidden bg-black hover:cursor-pointer" onClick={handlePostClick}>
 				<Image
 					src={props.post}
 					alt="post"
-					style={{ objectFit: "cover", width: "100%", height: "100%" }}
-					width={1920}
-					height={1080}
+					style={{ objectFit: "cover" }}
+					fill
 					priority
-					sizes="(max-width: 500px) 100vw"
+					sizes="(min-width: 60em) 24vw,
+                    (min-width: 28em) 45vw,
+                    100vw"
 				/>
 			</div>
 

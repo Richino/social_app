@@ -17,7 +17,7 @@ export default function Gallery() {
 					</div>
 				</div>
 
-				<Image src={image} alt="slide image" fill style={{ objectFit: "cover" }} priority />
+				<Image src={image} alt="slide image" fill style={{ objectFit: "cover" }} priority sizes="(max-width: 1374.84px) 100vw, 1374.84px" />
 			</div>
 		</div>
 	);

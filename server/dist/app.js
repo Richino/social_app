@@ -36,11 +36,11 @@ const corsOptions = {
 app.set("trust proxy", true);
 const io = new Server(server, {
     cors: {
-        origin: process.env["URL3"],
+        origin: process.env["PRODUCTION_URL_SOCKET"],
         methods: ["GET", "POST"],
     },
 });
-const PORT = process.env["PORT"] || 4000;
+const PORT = process.env["PRODUCTION_URL"] || 4000;
 //config
 app.use(express.json());
 app.use(cookieParser());
