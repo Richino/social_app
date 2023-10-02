@@ -26,7 +26,7 @@ const server = http.createServer(app);
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-	res.header("Access-Control-Allow-Origin", "https://www.momentswelive.app");
+	res.header("Access-Control-Allow-Origin", "https://socialapp-production-2516.up.railway.app");
 	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
 	res.header("Access-Control-Allow-Credentials", "true");
@@ -42,7 +42,7 @@ app.set("trust proxy", true);
 
 const io = new Server(server, {
 	cors: {
-		origin: process.env["URL2"],
+		origin: process.env["URL3"],
 		methods: ["GET", "POST"],
 	},
 });
