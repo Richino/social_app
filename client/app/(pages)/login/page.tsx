@@ -18,7 +18,7 @@ export default function Page() {
 		password: "",
 	});
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: "https://needless-pest-production.up.railway.app/",
 		withCredentials: true,
 	});
 

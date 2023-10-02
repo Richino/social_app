@@ -39,7 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 		isErrorOpen,
 	} = useContext(App);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: "https://needless-pest-production.up.railway.app/",
 		withCredentials: true,
 	});
 

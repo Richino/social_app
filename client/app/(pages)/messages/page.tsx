@@ -18,7 +18,7 @@ export default function Page() {
 	const [socketConnected, setSocketConnected] = useState<boolean>(false);
 	const [dataFetched, setDataFetch] = useState<boolean>(false);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: "https://needless-pest-production.up.railway.app/",
 		withCredentials: true,
 	});
 	async function fetchData() {
