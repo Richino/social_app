@@ -37,8 +37,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: "https://moments.up.railway.app", // Specify the allowed origin
-		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify which methods are allowed
+		origin: "https://moments.up.railway.app",
 	})
 );
 

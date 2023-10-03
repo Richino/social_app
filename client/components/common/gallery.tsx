@@ -2,9 +2,9 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 
 export default function Gallery() {
-	const [image, setImage] = useState(`/assets/black.jpg`);
+	//const [image, setImage] = useState(`/assets/black.jpg`);
 	useEffect(() => {
-		setImage(`/assets/${Math.floor(Math.random() * 6) + 1}.jpg`);
+		//setImage(`/assets/${Math.floor(Math.random() * 6) + 1}.jpg`);
 	}, []);
 
 	return (
@@ -17,7 +17,7 @@ export default function Gallery() {
 					</div>
 				</div>
 
-				<Image src={image} alt="slide image" fill style={{ objectFit: "cover" }} priority sizes="(max-width: 1374.84px) 100vw, 1374.84px" />
+				<Image src={""} alt="slide image" fill style={{ objectFit: "cover" }} priority sizes="(max-width: 1374.84px) 100vw, 1374.84px" />
 			</div>
 		</div>
 	);
