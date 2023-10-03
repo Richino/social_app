@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import http from "http";
@@ -30,6 +30,22 @@ const io = new Server(server, {
 });
 
 //config
+/*app.use((req: Request, res: Response, next: NextFunction) => {
+   const origin = req.headers.origin as string;
+   res.header("Access-Control-Allow-Origin", origin);
+   res.headers("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+   res.header("Access-Control-Allow-Credentials", "true");
+   next();
+ });*/
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+	res.header("Access-Control-Allow-Origin", process.env["PRODUCTION_URL"]);
+	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+	res.header("Access-Control-Allow-Credentials", "true");
+	next();
+});
 app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.set("trust proxy", true);
@@ -61,4 +77,4 @@ app.use("/messages", messages);
 //socketss
 messagesSocket(io);
 
-server.listen(PORT, () => console.log("Server started"));
+server.listen(PORT, () => console.log("Server started: ", PORT));
