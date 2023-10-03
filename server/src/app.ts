@@ -18,7 +18,7 @@ import search from "./controllers/search.js";
 import feeds from "./controllers/feeds.js";
 import post from "./controllers/post.js";
 import "dotenv/config";
-const PORT = process.env["PRODUCTION_URL"] || 4000;
+const PORT = process.env["PORT"] || 4000;
 
 const app = express();
 const server = http.createServer(app);
