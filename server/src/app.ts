@@ -35,11 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set("trust proxy", true);
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-	cors({
-		origin: "https://moments.up.railway.app",
-	})
-);
+app.use(cors());
 
 //routes
 app.use("/app", main);
