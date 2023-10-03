@@ -25,6 +25,19 @@ app.use(helmet());
 const server = http.createServer(app);
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req: Request, res: Response, next: NextFunction) => {
+	res.header("Access-Control-Allow-Origin", "https://moments.up.railway.app");
+	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+	res.header("Access-Control-Allow-Credentials", "true");
+	next();
+});
+
+const corsOptions = {
+	origin: process.env["URL"],
+	credentials: true,
+};
+
 app.set("trust proxy", true);
 
 const io = new Server(server, {
