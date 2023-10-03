@@ -42,6 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 		baseURL: process.env.url,
 		withCredentials: true,
 	});
+	console.log(process.env.url);
 
 	useEffect(() => {
 		const searchInput = document.getElementById("search") as HTMLInputElement;
