@@ -1,5 +1,4 @@
-import express, { NextFunction, Request, Response } from "express";
-import cookieSession from "cookie-session";
+import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import http from "http";
@@ -19,27 +18,10 @@ import search from "./controllers/search.js";
 import feeds from "./controllers/feeds.js";
 import post from "./controllers/post.js";
 import "dotenv/config";
+const PORT = process.env["PRODUCTION_URL"] || 4000;
 
 const app = express();
-app.use(helmet());
 const server = http.createServer(app);
-app.use(express.urlencoded({ extended: true }));
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-	res.header("Access-Control-Allow-Credentials", "true");
-	next();
-});
-
-const corsOptions = {
-	origin: process.env["URL"],
-	credentials: true,
-};
-
-app.set("trust proxy", true);
-
 const io = new Server(server, {
 	cors: {
 		origin: process.env["PRODUCTION_URL_SOCKET"],
@@ -47,14 +29,15 @@ const io = new Server(server, {
 	},
 });
 
-const PORT = process.env["PRODUCTION_URL"] || 4000;
-
 //config
+app.use(helmet());
+app.use(express.urlencoded({ extended: true }));
+app.set("trust proxy", true);
 app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: "https://moments.up.railway.app",
+		origin: process.env["PRODUCTION_URL"],
 		methods: ["GET", "POST", "PUT", "DELETE"],
 		allowedHeaders: ["Content-Type", "Authorization"],
 		credentials: true,
