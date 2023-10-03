@@ -98,6 +98,7 @@ router.get("/", auth, async (req: IRequest, res: Response) => {
 				},
 			])
 			.toArray();
+		res.header("Access-Control-Allow-Origin", "*");
 		return res.status(200).json({ user, feeds, notifications }); //
 	} catch (error) {
 		(await session).abortTransaction();
