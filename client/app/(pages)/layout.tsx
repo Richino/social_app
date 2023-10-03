@@ -39,7 +39,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 		isErrorOpen,
 	} = useContext(App);
 	const instance = axios.create({
-		baseURL: process.env.NEXT_PUBLIC_URL,
+		baseURL: "https://momentsapi.up.railway.app",
 		withCredentials: true,
 	});
 	console.log(process.env.NEXT_PUBLIC_URL);

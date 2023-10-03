@@ -17,7 +17,7 @@ export default function Page() {
 		password: "",
 	});
 	const instance = axios.create({
-		baseURL: process.env.NEXT_PUBLIC_URL,
+		baseURL: 'https://momentsapi.up.railway.app',
 		withCredentials: true,
 	});
 
