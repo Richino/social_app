@@ -17,7 +17,7 @@ export default function Page() {
 		password: "",
 	});
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 
