@@ -7,7 +7,7 @@ export default function Logout() {
 	const ref = useRef<HTMLDivElement>(null);
 	const { setLogout } = useContext(App);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 

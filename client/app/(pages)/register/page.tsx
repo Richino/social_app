@@ -6,7 +6,7 @@ import Link from "next/link";
 import axios from "axios";
 export default function Page() {
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 	const router = useRouter();

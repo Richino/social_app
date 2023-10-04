@@ -11,7 +11,7 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 import axios from "axios";
 import Link from "next/link";
 const instance = axios.create({
-	baseURL: process.env.url,
+	baseURL: process.env.NEXT_PUBLIC_URL,
 	withCredentials: true,
 });
 

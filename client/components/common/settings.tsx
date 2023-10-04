@@ -24,7 +24,7 @@ export default function Settings() {
 	const [success, setSuccess] = useState(false);
 	const router = useRouter();
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 

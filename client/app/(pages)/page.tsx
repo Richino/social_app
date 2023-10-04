@@ -1,10 +1,7 @@
 "use client";
 import Activity from "../../components/home/activity";
-import Explore from "../../components/home/explore";
 import Messages from "../../components/home/messages";
 import PostFeed from "../../components/home/postFeed";
-import Suggestion from "../../components/home/suggestion";
-import Stories from "../../components/home/stories";
 import { App } from "../context";
 import { useContext, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -18,7 +15,7 @@ export default function Home() {
 	const ref = useRef<HTMLDivElement>(null);
 	const [skip, setSkip] = useState(15);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 

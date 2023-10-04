@@ -19,7 +19,7 @@ export default function Page({ params }: any) {
 
 	const [index, setIndex] = useState(1);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 	async function fetchData() {

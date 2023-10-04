@@ -15,7 +15,7 @@ export default function List() {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 	function hidePopup(e: React.MouseEvent<HTMLDivElement>) {

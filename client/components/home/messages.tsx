@@ -12,7 +12,7 @@ import nprogress from "nprogress";
 export default function Messages() {
 	const { messages, messageIndex, setMessages, user, setMessageIndex, setMessageId } = useContext(App);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 	nprogress.configure({ showSpinner: false });

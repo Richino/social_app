@@ -1,6 +1,5 @@
 "use client";
 import Avatar from "../common/avatar";
-import { VscDiffAdded } from "react-icons/vsc";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import Search from "./search";
 import Link from "next/link";

@@ -15,7 +15,7 @@ export default function PostFeed(props: PostFeedProps) {
 	nprogress.configure({ showSpinner: false });
 	const { setPost, setUserPost, user, setUser } = useContext(App);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 

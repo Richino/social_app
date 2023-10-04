@@ -7,7 +7,7 @@ import { SearchProps } from "../../app/(interface)/search";
 
 export default function Search(props: SearchProps) {
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 	const { setUsers, setIsOpen, setMobileNav } = useContext(App);

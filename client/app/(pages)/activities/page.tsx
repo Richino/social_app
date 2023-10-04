@@ -1,17 +1,15 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RiUserFollowLine } from "react-icons/ri";
-import Header from "../../../components/home/header";
 import Image from "next/image";
-import { App } from "../../context";
-import { AiOutlinePicture, AiOutlineQuestion } from "react-icons/ai";
+import {  AiOutlineQuestion } from "react-icons/ai";
 import Avatar from "../../../components/common/avatar";
 import axios from "axios";
 
 export default function Activity() {
 	const [notifications, setNotifications] = useState([]);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 	function createdAt(comment_timestamp: string) {

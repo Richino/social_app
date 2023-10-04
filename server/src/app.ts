@@ -78,3 +78,6 @@ app.use("/messages", messages);
 messagesSocket(io);
 
 server.listen(PORT, () => console.log("Server started: ", PORT));
+
+
+///remindeer to add mongodb connection to the server and firebase connection to the server

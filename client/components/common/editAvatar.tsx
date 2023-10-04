@@ -6,7 +6,7 @@ import { useContext } from "react";
 export default function EditAvatar() {
 	const { user, setUser, setChangeProfile, userProfile, setUserProfile, setErrorMessage, setErrorOpen } = useContext(App);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 		headers: { "Content-Type": "multipart/form-data" },
 	});

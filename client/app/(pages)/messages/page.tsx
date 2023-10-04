@@ -18,7 +18,7 @@ export default function Page() {
 	const [socketConnected, setSocketConnected] = useState<boolean>(false);
 	const [dataFetched, setDataFetch] = useState<boolean>(false);
 	const instance = axios.create({
-		baseURL: process.env.url,
+		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
 	async function fetchData() {
@@ -81,7 +81,6 @@ export default function Page() {
 				fetchData();
 			} else {
 				let messageCopy = [...messages];
-				let x = messages;
 				let userIndex = messageCopy.findIndex((key: any) => key._id === data.recipient);
 				messageCopy[userIndex]?.message.unshift(data.message);
 				let removedObj = messageCopy.splice(userIndex, 1);
