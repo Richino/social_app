@@ -54,7 +54,7 @@ app.use(cookieParser());
 app.use(
 	cors({
 		//origin: "http:localhost:3000",
-		origin: process.env["PRODUCTION_URL"], // Specify the allowed origin
+		origin: "https://moments.up.railway.app/", // Specify the allowed origin
 		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify which methods are allowed
 	})
 );
