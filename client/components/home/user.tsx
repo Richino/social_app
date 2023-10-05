@@ -1,6 +1,8 @@
 import Avatar from "../common/avatar";
 import { UserProps } from "../../app/(interface)/user";
 export default function User(props: UserProps) {
+   console.log(props.type);
+   
 	return (
 		<div className="flex w-full gap-2 overflow-hidden">
 			<Avatar story={false} height={42} width={42} image={props.avatar} />
@@ -14,7 +16,7 @@ export default function User(props: UserProps) {
 							: props.type === "list"
 							? "w-[320px]"
 							: props.type === "post"
-							? "w-[270px]"
+							? "w-[270px] phone:w-[150px] text-ellipsis overflow-hidden"
 							: props.type === "message-main"
 							? "w-[130px]"
 							: props.type === "user-search"

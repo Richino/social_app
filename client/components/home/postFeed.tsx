@@ -30,7 +30,7 @@ export default function PostFeed(props: PostFeedProps) {
 				<BsThreeDots size={16} className="hover:cursor-pointer" />
 			</div>
 
-			<div className="relative h-[398px] w-[398px] overflow-hidden bg-black hover:cursor-pointer" onClick={handlePostClick}>
+			<div className="relative h-[398px] w-[398px] overflow-hidden bg-black hover:cursor-pointer phone:w-full" onClick={handlePostClick}>
 				<Image
 					src={props.post}
 					alt="post"

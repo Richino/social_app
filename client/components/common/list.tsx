@@ -61,7 +61,6 @@ export default function List() {
 			.post(`/main_user/get-list`, { id: list._id, type: list.type })
 			.then((res) => {
 				setLoading(false);
-				console.log(res.data);
 				setData(res.data);
 			})
 			.catch(() => {
@@ -77,7 +76,7 @@ export default function List() {
 			id="popup"
 			className=" fixed left-0 top-0 z-[100] grid h-full w-full place-items-center bg-black/80 phone:w-full phone:flex-col phone:overflow-y-auto phone:bg-neutral-100"
 			onClick={hidePopup}>
-			<div className="flex h-[400px] w-full  max-w-[400px] flex-col  rounded-md bg-white font-bold dark:bg-neutral-900 phone:h-full phone:w-full phone:max-w-none">
+			<div className="flex h-[400px] w-full  max-w-[400px] flex-col  rounded-md phone:rounded-none bg-white font-bold dark:bg-neutral-900 phone:h-full phone:w-full phone:max-w-none">
 				<div className="flex items-center  justify-between border-b border-neutral-200 p-5 dark:border-neutral-800">
 					<BsChevronLeft size={24} className=" hover:cursor-pointer" onClick={() => setList({ type: "", open: false, _id: "" })} />
 					{list.type}

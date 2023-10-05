@@ -47,7 +47,7 @@ export default function Home() {
 	return (
 		<div
 			ref={ref}
-			className={`feeds  flex h-[calc(100%-58px)] w-full justify-center  gap-5 overflow-y-auto bg-neutral-100 dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px] phone:h-[calc(100%-(59px+52px))]`}
+			className={`feeds  flex h-[calc(100%-58px)] w-full justify-center  gap-5 overflow-y-auto bg-neutral-100 tablet:h-[100svh] dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px] phone:h-[calc(100%-(59px+52px))]`}
 			onScroll={fetchFeeds}>
 			<div className=" cool sticky top-[0px] w-[250px] shrink-0 space-y-5 overflow-y-auto py-5 tablet:hidden">
 				<Activity />

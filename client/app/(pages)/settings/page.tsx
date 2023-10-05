@@ -64,9 +64,9 @@ export default function Page() {
 	}
 
 	return (
-		<div className="flex h-[calc(100%-58px)] w-full flex-shrink-0 flex-col  items-center gap-5 overflow-y-scroll bg-neutral-100 p-5 text-sm dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px]  phone:h-[calc(100%-(60px+52px))] tablet:p-0 tablet:phone:block">
-			<div className="message-container flex h-full w-full max-w-[1000px] border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900 phone:relative phone:block phone:border-0">
-				<div className=" phone:max-w-ful min-w-[380px] max-w-[380px] overflow-y-auto border-r    border-neutral-200 dark:border-neutral-800 phone:min-w-full">
+		<div className="flex h-[calc(100%-58px)] tablet:h-[100svh] w-full flex-shrink-0 flex-col  items-center gap-5 overflow-y-scroll bg-neutral-100 p-5 text-sm dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px]  phone:h-[calc(100%-(60px+52px))] tablet:p-0 tablet:phone:block">
+			<div className="message-container flex  h-full w-full max-w-[1000px] tablet:w-full border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900 phone:relative phone:block phone:border-0">
+				<div className=" phone:max-w-full tablet:min-w-0 tablet:max-w-[200px]  min-w-[380px] max-w-[380px] overflow-y-auto border-r    border-neutral-200 dark:border-neutral-800 phone:min-w-full">
 					<button
 						className={`w-full border-l-4 p-5 py-2 text-left hover:bg-neutral-200 dark:hover:bg-neutral-800  ${
 							index == 1 ? "border-l-violet-500 bg-neutral-200 dark:bg-neutral-800" : "border-l-transparent "

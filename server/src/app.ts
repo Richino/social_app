@@ -24,8 +24,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
 	cors: {
-		origin: process.env["PRODUCTION_URL_SOCKET"],
-		methods: ["GET", "POST"],
+		origin: "http://localhost:3000", // Corrected origin URL
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 	},
 });
 
@@ -53,6 +53,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
+      //origin: "http:localhost:3000",
 		origin: "https://moments.up.railway.app", // Specify the allowed origin
 		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify which methods are allowed
 	})
@@ -77,7 +78,7 @@ app.use("/messages", messages);
 //socketss
 messagesSocket(io);
 
-server.listen(PORT, () => console.log("Server started: ", PORT));
+server.listen(4000, () => console.log("Server started: ", 4000));
 
 
 ///remindeer to add mongodb connection to the server and firebase connection to the server

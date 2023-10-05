@@ -132,7 +132,7 @@ export default function Page({ params }: any) {
 		);
 	} else if (!userProfile.user && !userProfile.loading) {
 		return (
-			<div className="grid h-[calc(100%-58px)] w-full place-items-center overflow-y-auto dark:bg-neutral-900">
+			<div className="grid h-[calc(100%-58px)] w-full place-items-center overflow-y-auto dark:bg-neutral-900 tablet:h-[100svh]">
 				<div className="flex flex-col items-center">
 					<span className="p-5 text-9xl">404</span>
 					<span className="text-5xl">Page Not Found</span>
@@ -150,7 +150,7 @@ export default function Page({ params }: any) {
 	} else {
 		return (
 			<>
-				<div className=" flex h-[calc(100%-58px)] w-full flex-col items-center gap-5 overflow-y-scroll  bg-neutral-100 text-sm dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px]  phone:h-[calc(100%-(59px+52px))] tablet:phone:block">
+				<div className=" flex h-[calc(100%-58px)] w-full flex-col items-center gap-5 overflow-y-scroll tablet:h-[100svh]  bg-neutral-100 text-sm dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px]  phone:h-[calc(100%-(59px+52px))] tablet:phone:block">
 					<div className="item flex p-5 pb-0 pt-0 tablet:phone:w-full">
 						<div className="p-5 px-0">
 							<div
@@ -213,10 +213,10 @@ export default function Page({ params }: any) {
 							<b>{userProfile.post?.length}</b>
 							<span> post</span>
 						</span>
-						<span className="flex flex-col items-center py-5">
+						<span className="flex flex-col items-center py-5" onClick={() => openList("Followers")}>
 							<b>{userProfile.user?.followers?.length}</b> <span>followers</span>
 						</span>
-						<span className="flex flex-col items-center py-5">
+						<span className="flex flex-col items-center py-5" onClick={() => openList("Following")}>
 							<b>{userProfile.user?.following?.length}</b> <span>following</span>
 						</span>
 					</div>

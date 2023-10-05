@@ -2,14 +2,15 @@
 import { BsChevronLeft, BsThreeDots } from "react-icons/bs";
 import { AiFillHeart, AiOutlineClose, AiOutlineHeart } from "react-icons/ai";
 import User from "../home/user";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 import Avatar from "./avatar";
 import { Comments, TypeComment, Popup, IPost } from "../../app/(interface)/post";
 import { App } from "../../app/context";
-import Image from "next/image";
+import ImageTag from "next/image";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import axios from "axios";
 import Link from "next/link";
+import { set } from "nprogress";
 const instance = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_URL,
 	withCredentials: true,
@@ -364,8 +365,12 @@ export function Popup(props: Popup) {
 
 //main component
 export default function Post(props: IPost) {
+	const postImageContainer2Ref = useRef<HTMLDivElement>(null);
 	const [loading, setLoading] = useState(false);
 	const [width, setWidth] = useState(window.innerWidth);
+	const [isImagePortrait, setIsImagePortrait] = useState(false);
+	const [imageLoaded, setImageLoaded] = useState(false);
+	const [over2k, setOver2k] = useState(false);
 	const { setPost, user, comments, setComments, userPost, setUser, userProfile, setUserProfile, popup, setPopup, setErrorMessage, setErrorOpen } = useContext(App);
 
 	async function fetchData() {
@@ -444,21 +449,47 @@ export default function Post(props: IPost) {
 			setPost(false);
 			setComments([]);
 		}
-		if ((e.target as HTMLDivElement).id === "post-image-container-2") {
-			setComments([]);
-			setPost(false);
-		}
 	}
 
 	useEffect(() => {
 		fetchData();
+		const img = new Image(); // Renamed to "img"
+		img.src = props.post;
+
+		img.onload = () => {
+			const imageWidth = img.width;
+			const imageHeight = img.height;
+			console.log(imageWidth, imageHeight);
+			setImageLoaded(true);
+			setIsImagePortrait(imageHeight > imageWidth);
+			setOver2k(imageHeight > 2000);
+		};
 		const handleResize = () => setWidth(window.innerWidth);
+		const handleClickOutside = (e: any) => {
+			if (e.target.id === "post-modal") {
+				setPost(false);
+				setComments([]);
+			}
+
+			if (postImageContainer2Ref.current && postImageContainer2Ref.current === (e.target as Node)) {
+				setComments([]);
+				setPost(false);
+			}
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
 		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
+		return () => {
+			window.removeEventListener("resize", handleResize);
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
 	}, []);
 
 	return (
-		<div id="post-modal" className="fixed left-0 top-0 z-[100] flex h-full w-full bg-black/80 phone:flex-col phone:overflow-y-auto phone:bg-neutral-100" onClick={hidePost}>
+		<div
+			id="post-modal"
+			className="fixed left-0 top-0 z-[100] flex h-full w-full bg-black/80 phone:h-[100svh] phone:flex-col phone:overflow-y-auto phone:bg-neutral-100"
+			onClick={hidePost}>
 			<div className="close fixed left-[20px] top-[20px] z-50 rounded-full bg-white/25  p-2 hover:cursor-pointer">
 				<AiOutlineClose color="white" size={20} className="" onClick={() => setPost(false)} />
 			</div>
@@ -475,7 +506,7 @@ export default function Post(props: IPost) {
 
 			<div
 				id="post-image-container"
-				className={` relative  flex h-full w-full max-w-[1526.84px] items-center justify-center p-10 phone:mt-[83px] phone:p-0`}
+				className={` relative  flex h-screen w-full max-w-[1526.84px]  items-center justify-center p-10 phone:mt-[83px] phone:p-0`}
 				onClick={hidePost}>
 				<div className="post-title relative  hidden place-items-center justify-between bg-white p-5 dark:bg-neutral-900">
 					<BsChevronLeft size={24} className=" hover:cursor-pointer" onClick={() => setPost(false)} />
@@ -484,39 +515,40 @@ export default function Post(props: IPost) {
 					</span>
 					<BsThreeDots size={16} className="hover:cursor-pointer" onClick={() => setPopup(true)} />
 				</div>
-				<div id="post-image-container-2" className="post-image-container relative flex aspect-square  h-full  items-center  justify-center bg-black transition-width ">
-					<Image
-						priority
-						id="post-image"
-						src={props.post}
-						height={1080}
-						width={1920}
-						alt="post"
-						style={{
-							height: "100%",
-							width: "100%",
-							objectFit: "cover",
-						}}
-						quality={100}
-						onError={() => {
-							setErrorMessage("Image failed to load (dev too broke to upgrade storage)");
-							setErrorOpen(true);
-							setPost(false);
-						}}
-					/>
-				</div>
+				{imageLoaded && (
+					<div
+						ref={postImageContainer2Ref}
+						id="post-image-container-2"
+						className="post-image-container flex  h-full w-full items-center  justify-center  transition-width phone:bg-white p-5 phone:dark:bg-black phone:p-0">
+						<ImageTag
+							priority
+							id="post-image"
+							src={props.post}
+							alt="post"
+							height={500}
+                     
+							width={isImagePortrait ? (over2k ? 474 : 500) : 1264}
+							quality={100}
+							onError={() => {
+								setErrorMessage("Image failed to load (dev too broke to upgrade storage)");
+								setErrorOpen(true);
+								setPost(false);
+							}}
+						/>
+					</div>
+				)}
 			</div>
-			<div className="sticky top-[83px] z-50 hidden w-[400px]  max-w-[400px] flex-col justify-between gap-4 border-b border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900 phone:flex phone:w-full">
-				<div className="flex justify-between">
+			<div className="sticky top-[83px] z-50 hidden w-[400px]  max-w-[400px] flex-col  justify-between gap-4 border-b border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900 phone:flex phone:w-full phone:max-w-none">
+				<div className="flex justify-between ">
 					<Link href={`/${props.usernameOrText}`}>
 						<User fullname={props.fullname} avatar={props.avatar} usernameOrText={props.usernameOrText} type="post" />
 					</Link>
-					<div className="flex items-center gap-2">
+					<div className="flex items-center gap-2 ">
 						{user.user?._id !== props.author && (
 							<>
 								{user.user?.following?.includes(props.author) ? (
 									<button className="rounded-md border border-violet-500 p-2  px-4 text-violet-500 transition-colors hover:bg-violet-500 hover:text-white">
-										<b>UnFollow</b>
+										<b>Unfollow</b>
 									</button>
 								) : (
 									<button className="rounded-md border border-violet-500 p-2  px-4 text-violet-500 transition-colors hover:bg-violet-500 hover:text-white">
@@ -529,7 +561,7 @@ export default function Post(props: IPost) {
 					</div>
 				</div>
 			</div>
-			<div className={`comments-box  h-full w-[400px] min-w-[400px] max-w-[400px] bg-white  dark:bg-neutral-900 phone:w-full phone:min-w-0`}>
+			<div className={`comments-box  h-full w-[400px] min-w-[400px] max-w-[400px] bg-white dark:bg-neutral-900  phone:w-full phone:min-w-0 phone:max-w-none`}>
 				<div className="flex flex-col gap-4 border-b border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900 phone:hidden">
 					<div className="flex max-w-[500px] justify-between ">
 						<Link href={`/${props.usernameOrText}`} className="max-w-[240px] ">
@@ -559,7 +591,7 @@ export default function Post(props: IPost) {
 				</div>
 				{loading ? (
 					<div
-						className={`grid  place-items-center space-y-5 overflow-y-auto bg-neutral-100 p-5 text-base  dark:bg-neutral-950 ${
+						className={`grid  place-items-center space-y-5 overflow-y-auto bg-neutral-100 p-5 text-base  dark:bg-neutral-950 phone:w-full ${
 							width > 600 && "h-[calc(100%-(83px+65px))]"
 						} phone:pb-[85px]`}>
 						<div className="circle"> </div>
@@ -568,16 +600,16 @@ export default function Post(props: IPost) {
 					<>
 						{comments.length === 0 && userPost.caption.length === 0 ? (
 							<div
-								className={`grid  place-items-center space-y-5 overflow-y-auto bg-neutral-100 p-5 text-base  dark:bg-neutral-950 ${
+								className={`grid  place-items-center space-y-5 overflow-y-auto bg-neutral-100 p-5 text-base  dark:bg-neutral-950 phone:w-full ${
 									width > 600 ? "h-[calc(100%-(83px+65px))]" : "h-full"
 								} phone:pb-[85px]`}>
 								Be the first to comment
 							</div>
 						) : (
 							<div
-								className={`space-y-5  overflow-y-auto bg-neutral-100 p-5   dark:bg-neutral-950 ${
+								className={`space-y-5  overflow-y-auto bg-neutral-100 p-5   dark:bg-neutral-950 phone:w-full  ${
 									width > 600 && "h-[calc(100%-(83px+65px))]"
-								} phone:h-[calc(100%-65px)]`}>
+								} phone:min-h-[100svh]`}>
 								{userPost.caption.length > 1 && userPost && (
 									<Comment
 										createdAt={userPost.createdAt}
