@@ -37,7 +37,7 @@ export default function Page() {
 		}
 	}, [messageIndex]);
 	useEffect(() => {
-		const newSocket = io(`wss://momentsapi.up.railway.app/messages`, { auth: { id: user.user?._id } });
+		const newSocket = io(`${process.env.NEXT_PUBLIC_SOCKET_URL}`, { auth: { id: user.user?._id } });
 		setSocket(newSocket);
 		if (!dataFetched) {
 			fetchData();
@@ -119,10 +119,8 @@ export default function Page() {
 	}
 
 	function sendMessage(key: any) {
-		console.log("here");
-
+		setText("");
 		if (text.length === 0) return;
-
 		socket.emit("message", { message: text, id: key._id, sender: user.user?._id, index: messageIndex });
 	}
 
