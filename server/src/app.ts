@@ -24,7 +24,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
 	cors: {
-		origin: process.env["PRODUCTION_URL"], // Corrected origin URL
+		origin: "https://moments.up.railway.app/", // Corrected origin URL
 		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 	},
 });
@@ -54,7 +54,7 @@ app.use(cookieParser());
 app.use(
 	cors({
 		//origin: "http:localhost:3000",
-		origin: "https://moments.up.railway.app/", // Specify the allowed origin
+		origin: process.env["PRODUCTION_URL"], // Specify the allowed origin
 		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify which methods are allowed
 	})
 );
