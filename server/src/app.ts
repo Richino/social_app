@@ -30,15 +30,6 @@ const io = new Server(server, {
 });
 
 //config
-/*app.use((req: Request, res: Response, next: NextFunction) => {
-   const origin = req.headers.origin as string;
-   res.header("Access-Control-Allow-Origin", origin);
-   res.headers("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-   res.header("Access-Control-Allow-Credentials", "true");
-   next();
- });*/
-
 app.use((req: Request, res: Response, next: NextFunction) => {
 	res.header("Access-Control-Allow-Origin", process.env["PRODUCTION_URL"]);
 	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");

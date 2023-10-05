@@ -37,7 +37,7 @@ export default function Page() {
 		}
 	}, [messageIndex]);
 	useEffect(() => {
-		const newSocket = io(`wss://moments.up.railway.app/messages`, { auth: { id: user.user?._id } });
+		const newSocket = io(`wss://momentsapi.up.railway.app/messages`, { auth: { id: user.user?._id } });
 		setSocket(newSocket);
 		if (!dataFetched) {
 			fetchData();
