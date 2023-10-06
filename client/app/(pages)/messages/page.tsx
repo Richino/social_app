@@ -47,7 +47,6 @@ export default function Page() {
 	}, [messageIndex]);
 
 	useEffect(() => {
-
 		const newSocket = io(`${process.env.NEXT_PUBLIC_SOCKET_URL}`, {
 			auth: { id: user.user?._id },
 		});
@@ -93,12 +92,6 @@ export default function Page() {
 				setMessages(messageCopy);
 				if (messageIndex === userIndex) setMessageIndex(userIndex);
 			}
-
-			setTimeout(() => {
-				if (ref.current) {
-					ref.current.scrollTo(0, ref.current.scrollHeight);
-				}
-			}, 400);
 		});
 
 		newSocket.on("send-message", (data) => {
@@ -113,18 +106,18 @@ export default function Page() {
 				setMessageIndex(0);
 				setMessages(messageCopy);
 			}
-
-			setTimeout(() => {
-				if (ref.current) {
-					ref.current.scrollTo(0, ref.current.scrollHeight);
-				}
-			}, 400);
 		});
 
 		return () => {
 			newSocket.disconnect();
 		};
 	}, [messages, messageIndex]);
+
+	useEffect(() => {
+		if (ref.current) {
+			ref.current.scrollTo(0, ref.current.scrollHeight);
+		}
+	}, [messageIndex, messages]);
 
 	async function changeUser(position: number, id: string, unreads: number) {
 		if (unreads !== 0) {
