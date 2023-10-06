@@ -12,7 +12,7 @@ export interface IMessage extends Document {
 	readBy: ObjectId[];
 }
 //
-router.get("/", auth, async (req: IRequest, res: Response) => {
+router.get("/", auth, async (req: any, res: Response) => {
 	const client = await connectDB();
 	const session = client.startSession();
 	(await session).startTransaction();

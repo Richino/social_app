@@ -5,7 +5,7 @@ import connectDB from "../config/mongodb.js";
 import { ObjectId } from "mongodb";
 const router = Router();
 //
-router.get("/", auth, async (req: IRequest, res: Response) => {
+router.get("/", auth, async (req: any, res: Response) => {
 	const client = await connectDB();
 	const session = client.startSession();
 	(await session).startTransaction();

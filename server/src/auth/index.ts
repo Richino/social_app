@@ -7,7 +7,7 @@ const secret = process.env["SECRET"];
 
 //possible to has the cookie
 
-export default function auth(req: IRequest, res: Response, next: NextFunction) {
+export default function auth(req: any, res: Response, next: NextFunction) {
 	const auth = req.cookies.auth;
 	console.log(auth);
 	if (!auth) return res.status(401).send("Unauthorized");
