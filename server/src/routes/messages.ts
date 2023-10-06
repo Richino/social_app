@@ -145,7 +145,7 @@ router.post("/user/:id", auth, async (req: any, res: Response) => {
 	}
 });
 
-router.post("/read", auth, async (req: IRequest, res: Response) => {
+router.post("/read", auth, async (req: any, res: Response) => {
 	const { user } = req["body"];
 	const client = await connectDB();
 	const session = client.startSession();
