@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { IRequest } from "../interfaces/index.js";
+//import { IRequest } from "../interfaces/index.js";
 import connectDB from "../config/mongodb.js";
 import "dotenv/config";
 import { ObjectId } from "mongodb";
@@ -18,7 +18,7 @@ function validateEmail(email: string): boolean {
 	return emailRegex.test(email);
 }
 
-router.post("/follow/:id", auth, async (req: IRequest, res: Response) => {
+router.post("/follow/:id", auth, async (req: any, res: Response) => {
 	const { id } = req.params;
 	const follower = req.body["user"];
 	const client = await connectDB();
@@ -57,7 +57,7 @@ router.post("/follow/:id", auth, async (req: IRequest, res: Response) => {
 	}
 });
 
-router.post("/like/:id", auth, async (req: IRequest, res: Response) => {
+router.post("/like/:id", auth, async (req: any, res: Response) => {
 	const { id } = req.params;
 	const { user, author } = req.body;
 	const client = await connectDB();
@@ -97,7 +97,7 @@ router.post("/like/:id", auth, async (req: IRequest, res: Response) => {
 	}
 });
 
-router.post("/like-comment", auth, async (req: IRequest, res: Response) => {
+router.post("/like-comment", auth, async (req: any, res: Response) => {
 	const { commentId, author, user, postId } = req.body;
 	const client = await connectDB();
 	const session = client.startSession();
@@ -135,7 +135,7 @@ router.post("/like-comment", auth, async (req: IRequest, res: Response) => {
 	}
 });
 
-router.post("/caption/update", auth, async (req: IRequest, res: Response) => {
+router.post("/caption/update", auth, async (req: any, res: Response) => {
 	const { postId, text } = req.body;
 	console.log({ postId, text });
 	const client = await connectDB();
@@ -152,7 +152,7 @@ router.post("/caption/update", auth, async (req: IRequest, res: Response) => {
 	}
 });
 
-router.post("/update/user/:type", auth, async (req: IRequest, res: Response) => {
+router.post("/update/user/:type", auth, async (req: any, res: Response) => {
 	const { type } = req.params;
 	const data = req.body;
 	let username = data.username.trim();
@@ -208,7 +208,7 @@ router.post("/update/user/:type", auth, async (req: IRequest, res: Response) => 
 	}
 });
 
-router.post("/get-list", auth, async (req: IRequest, res: Response) => {
+router.post("/get-list", auth, async (req: any, res: Response) => {
 	const { id, type } = req.body;
 	const client = await connectDB();
 	const session = client.startSession();
@@ -259,7 +259,7 @@ router.post("/get-list", auth, async (req: IRequest, res: Response) => {
 	}
 });
 
-router.delete("/post/delete", auth, async (req: IRequest, res: Response) => {
+router.delete("/post/delete", auth, async (req: any, res: Response) => {
 	const id: any = req.query["id"];
 	const client = await connectDB();
 	const session = client.startSession();
@@ -275,7 +275,7 @@ router.delete("/post/delete", auth, async (req: IRequest, res: Response) => {
 	}
 });
 
-router.post("/comment/:id", auth, async (req: IRequest, res: Response) => {
+router.post("/comment/:id", auth, async (req: any, res: Response) => {
 	const author = req.params["id"];
 	const { post, text } = req.body;
 	if (text.length === 0) return res.status(400);

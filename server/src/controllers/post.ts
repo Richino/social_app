@@ -2,7 +2,7 @@
 import { Router, Response } from "express";
 import connectDB from "../config/mongodb.js";
 
-import { IRequest } from "../interfaces";
+//import { IRequest } from "../interfaces";
 import auth from "../auth/index.js";
 import "dotenv/config";
 
@@ -10,7 +10,7 @@ import { ObjectId } from "mongodb";
 const router = Router();
 
 
-router.post("/comments/:id", auth, async (req: IRequest, res: Response) => {
+router.post("/comments/:id", auth, async (req: any, res: Response) => {
 	const post = req.params["id"];
 	const client = await connectDB();
 	const session = client.startSession();

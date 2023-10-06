@@ -3,7 +3,7 @@ import { storage } from "../config/firebase.js";
 import { Router, Response } from "express";
 import connectDB from "../config/mongodb.js";
 import { v4 as uuidv4 } from "uuid";
-import { IRequest } from "../interfaces";
+//import { IRequest } from "../interfaces";
 import auth from "../auth/index.js";
 import "dotenv/config";
 import multer from "multer";
@@ -12,7 +12,7 @@ import { ObjectId } from "mongodb";
 const router = Router();
 const upload = multer();
 
-router.post("/post/upload", auth, upload.any(), async (req: IRequest, res: Response) => {
+router.post("/post/upload", auth, upload.any(), async (req: any, res: Response) => {
 	const caption = req.body.caption;
 	const author = req.user.id;
 	const client = await connectDB();
@@ -52,7 +52,7 @@ router.post("/post/upload", auth, upload.any(), async (req: IRequest, res: Respo
 	}
 });
 
-router.post("/profile/upload", auth, upload.single("image"), async (req: IRequest, res: Response) => {
+router.post("/profile/upload", auth, upload.single("image"), async (req: any, res: Response) => {
 	const user = req.user.id;
 
 	const client = await connectDB();
@@ -82,7 +82,7 @@ router.post("/profile/upload", auth, upload.single("image"), async (req: IReques
 	}
 });
 
-router.post("/profile/delete", auth, async (req: IRequest, res: Response) => {
+router.post("/profile/delete", auth, async (req: any, res: Response) => {
 	const user = req.user.id;
 	const client = await connectDB();
 	const session = client.startSession();

@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Router } from "express";
 import auth from "../auth/index.js";
+//import { IRequest } from "../interfaces/index.js";
 import connectDB from "../config/mongodb.js";
 import { ObjectId } from "mongodb";
 const router = Router();
@@ -18,13 +19,14 @@ router.get("/", auth, (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const session = client.startSession();
     (yield session).startTransaction();
     try {
-        const user = yield client
+        const userPromise = client
             .collection("users")
             .findOne({ _id: new ObjectId(req.user.id) }, { projection: { password: 0, __v: 0 } })
             .catch(() => res.status(500).send("User not found"));
+        const [user] = yield Promise.all([userPromise]);
         let following = [...user["following"]];
         following.push(req.user.id);
-        const feeds = yield client
+        const feedsPromise = client
             .collection("posts")
             .aggregate([
             { $match: { author: { $in: following.map((id) => new ObjectId(id)) } } },
@@ -66,7 +68,7 @@ router.get("/", auth, (req, res) => __awaiter(void 0, void 0, void 0, function* 
             },
         ])
             .toArray();
-        const notifications = yield client
+        const notificationsPromise = client
             .collection("notifications")
             .aggregate([
             {
@@ -104,6 +106,7 @@ router.get("/", auth, (req, res) => __awaiter(void 0, void 0, void 0, function* 
             },
         ])
             .toArray();
+        const [feeds, notifications] = yield Promise.all([feedsPromise, notificationsPromise]);
         return res.status(200).json({ user, feeds, notifications }); //
     }
     catch (error) {

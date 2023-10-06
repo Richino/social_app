@@ -18,37 +18,32 @@ import search from "./controllers/search.js";
 import feeds from "./controllers/feeds.js";
 import post from "./controllers/post.js";
 import "dotenv/config";
+const PORT = process.env["PORT"] || 4000;
 const app = express();
-app.use(helmet());
 const server = http.createServer(app);
-app.use(express.urlencoded({ extended: true }));
+const io = new Server(server, {
+    cors: {
+        origin: process.env["PRODUCTION_URL"],
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    },
+});
+//config
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://socialapp-production-2516.up.railway.app");
+    res.header("Access-Control-Allow-Origin", process.env["PRODUCTION_URL"]);
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
-const corsOptions = {
-    origin: process.env["URL"],
-    credentials: true,
-};
+app.use(helmet());
+app.use(express.urlencoded({ extended: true }));
 app.set("trust proxy", true);
-const io = new Server(server, {
-    cors: {
-        origin: process.env["PRODUCTION_URL_SOCKET"],
-        methods: ["GET", "POST"],
-    },
-});
-const PORT = process.env["PRODUCTION_URL"] || 4000;
-//config
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    //origin: "http:localhost:3000",
+    origin: process.env["PRODUCTION_URL"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify which methods are allowed
 }));
 //routes
 app.use("/app", main);
@@ -66,5 +61,6 @@ app.use("/post", post);
 app.use("/messages", messages);
 //socketss
 messagesSocket(io);
-server.listen(PORT, () => console.log("Server started"));
+server.listen(PORT, () => console.log("Server started: ", PORT));
+///remindeer to add mongodb connection to the server and firebase connection to the server
 //# sourceMappingURL=app.js.map

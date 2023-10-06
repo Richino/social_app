@@ -10,7 +10,8 @@
 		"start:ts": "tsc -w",
 		"start:js": "nodemon dist/app.js",
 		"start": "node dist/app.js",
-		"dev": "concurrently npm:start:*"
+		"dev": "concurrently npm:start:*",
+		"build-and-start": "npm run build && npm run start"
 	},
 	"keywords": [],
 	"author": "",
