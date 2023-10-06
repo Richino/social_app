@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { IRequest } from "../interfaces";
+//import { IRequest } from "../interfaces";
 import { IIncomingMessage } from "../interfaces";
 const secret = process.env["SECRET"];
 

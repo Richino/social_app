@@ -1,6 +1,6 @@
 import { Router, Response } from "express";
 import auth from "../auth/index.js";
-import { IRequest } from "../interfaces/index.js";
+//import { IRequest } from "../interfaces/index.js";
 import connectDB from "../config/mongodb.js";
 import { ObjectId } from "mongodb";
 const router = Router();
