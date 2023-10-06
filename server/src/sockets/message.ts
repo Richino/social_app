@@ -93,22 +93,20 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 								.updateOne({ _id: res["sender"] }, { $push: { messages: { $each: [new ObjectId(data.id)], $position: 0 } } })
 								.catch((err) => console.log(err.message, 1));
 						} else {
-							await Promise.all([
-								client
-									.collection("users")
-									.updateOne({ _id: res["sender"] }, { $pull: { messages: new ObjectId(data.id) } })
-									.then((res) => {
-										console.log(res, "pulled");
-									})
-									.catch((err) => console.log(err.message, 2)),
-								client
-									.collection("users")
-									.updateOne({ _id: res["sender"] }, { $push: { messages: { $each: [new ObjectId(data.id)], $position: 0 } } })
-									.then((res) => {
-										console.log(res, "pushed");
-									})
-									.catch((err) => console.log(err.message, 3)),
-							]);
+							await client
+								.collection("users")
+								.updateOne({ _id: res["sender"] }, { $pull: { messages: new ObjectId(data.id) } })
+								.then((res) => {
+									console.log(res, "pulled");
+								})
+								.catch((err) => console.log(err.message, 2));
+							await client
+								.collection("users")
+								.updateOne({ _id: res["sender"] }, { $push: { messages: { $each: [new ObjectId(data.id)], $position: 0 } } })
+								.then((res) => {
+									console.log(res, "pushed");
+								})
+								.catch((err) => console.log(err.message, 3));
 						}
 					} else {
 						await client
@@ -125,22 +123,20 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 								.updateOne({ _id: new ObjectId(data.id) }, { $push: { messages: { $each: [res["sender"]], $position: 0 } } })
 								.catch((err) => console.log(err.message, 4));
 						} else {
-							await Promise.all([
-								client
-									.collection("users")
-									.updateOne({ _id: new ObjectId(data.id) }, { $pull: { messages: res["sender"] } })
-									.then((res) => {
-										console.log(res, "pushed");
-									})
-									.catch((err) => console.log(err.message, 5)),
-								client
-									.collection("users")
-									.updateOne({ _id: new ObjectId(data.id) }, { $push: { messages: { $each: [res["sender"]], $position: 0 } } })
-									.then((res) => {
-										console.log(res, "pulled");
-									})
-									.catch((err) => console.log(err.message, 6)),
-							]);
+							await client
+								.collection("users")
+								.updateOne({ _id: new ObjectId(data.id) }, { $pull: { messages: res["sender"] } })
+								.then((res) => {
+									console.log(res, "pushed");
+								})
+								.catch((err) => console.log(err.message, 5));
+							await client
+								.collection("users")
+								.updateOne({ _id: new ObjectId(data.id) }, { $push: { messages: { $each: [res["sender"]], $position: 0 } } })
+								.then((res) => {
+									console.log(res, "pulled");
+								})
+								.catch((err) => console.log(err.message, 6));
 						}
 					} else {
 						await client
