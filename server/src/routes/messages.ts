@@ -101,8 +101,8 @@ router.get("/", auth, async (req: IRequest, res: Response) => {
 	}
 });
 
-router.post("/user/:id", auth, async (req: IRequest, res: Response) => {
-	const { id } = req.params;
+router.post("/user/:id", auth, async (req: any, res: Response) => {
+	const { id } = req.params
 	const client = await connectDB();
 	const session = client.startSession();
 	(await session).startTransaction();
@@ -146,7 +146,7 @@ router.post("/user/:id", auth, async (req: IRequest, res: Response) => {
 });
 
 router.post("/read", auth, async (req: IRequest, res: Response) => {
-	const { user } = req.body;
+	const { user } = req["body"];
 	const client = await connectDB();
 	const session = client.startSession();
 	(await session).startTransaction();
@@ -161,14 +161,14 @@ router.post("/read", auth, async (req: IRequest, res: Response) => {
 			})
 			.toArray();
 
-		const sender = await client.collection("users").findOne({ _id: new ObjectId(req.user.id) });
+		/*const sender = await client.collection("users").findOne({ _id: new ObjectId(req.user.id) });
 		const recipient = await client.collection("users").findOne({ _id: new ObjectId(user) });
 		let senderMessage = [...sender["messages"]];
 		let recipientMessage = [...recipient["messages"]];
 		let senderMessageIndex = senderMessage.map((e) => e).indexOf(user);
 		let recipientMessageIndex = recipientMessage.map((e) => e).indexOf(req.user.id);
+		console.log({ senderMessageIndex, senderMessage, sender: user }, { recipientMessageIndex, recipientMessage, recipient: req.user.id });*/
 
-		console.log({ senderMessageIndex, senderMessage, sender: user }, { recipientMessageIndex, recipientMessage, recipient: req.user.id });
 
 		for (const message of messages) {
 			if (!message["readBy"].includes(req.user.id)) {

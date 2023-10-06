@@ -11,14 +11,16 @@ router.get("/", auth, async (req: IRequest, res: Response) => {
 	(await session).startTransaction();
 
 	try {
-		const user = await client
+		const userPromise = client
 			.collection("users")
 			.findOne({ _id: new ObjectId(req.user.id) }, { projection: { password: 0, __v: 0 } })
 			.catch(() => res.status(500).send("User not found"));
 
+		const [user] = await Promise.all([userPromise]);
+
 		let following: Array<string> = [...user["following"]];
 		following.push(req.user.id);
-		const feeds = await client
+		const feedsPromise = client
 			.collection("posts")
 			.aggregate([
 				{ $match: { author: { $in: following.map((id: any) => new ObjectId(id)) } } },
@@ -60,7 +62,7 @@ router.get("/", auth, async (req: IRequest, res: Response) => {
 				},
 			])
 			.toArray();
-		const notifications = await client
+		const notificationsPromise = client
 			.collection("notifications")
 			.aggregate([
 				{
@@ -98,6 +100,8 @@ router.get("/", auth, async (req: IRequest, res: Response) => {
 				},
 			])
 			.toArray();
+
+		const [feeds, notifications] = await Promise.all([feedsPromise, notificationsPromise]);
 		return res.status(200).json({ user, feeds, notifications }); //
 	} catch (error) {
 		(await session).abortTransaction();
