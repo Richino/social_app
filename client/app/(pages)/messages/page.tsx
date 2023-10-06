@@ -11,42 +11,62 @@ import axios from "axios";
 
 export default function Page() {
 	const { user, setList, messages, messageIndex, setMessageIndex, list, setMessages, messageId } = useContext(App);
+
 	const [text, setText] = useState("");
 	const ref = useRef<HTMLDivElement>(null);
+
 	const input = (e: ChangeEvent<HTMLInputElement>) => setText(e.target.value);
+
 	const [socket, setSocket] = useState<any>(null);
 	const [socketConnected, setSocketConnected] = useState<boolean>(false);
-	const [dataFetched, setDataFetch] = useState<boolean>(false);
+	const [dataFetched, setDataFetched] = useState<boolean>(false);
+
 	const instance = axios.create({
 		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
+
 	async function fetchData() {
-		instance.get("/messages").then((res: any) => {
+		try {
+			const res = await instance.get("/messages");
 			let data: Array<any> = res.data.reverse();
 			if (messageId.length > 0) {
 				let userIndex = data.findIndex((key: any) => key._id === messageId);
 				setMessageIndex(userIndex);
 			}
-			setMessages(() => data);
-		});
+			setMessages(data);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
 	}
+
 	useEffect(() => {
-		if (ref.current != undefined) {
-			ref.current?.scrollTo(0, ref.current.scrollHeight);
+		if (ref.current) {
+			ref.current.scrollTo(0, ref.current.scrollHeight);
 		}
 	}, [messageIndex]);
+
 	useEffect(() => {
-		const newSocket = io(`${process.env.NEXT_PUBLIC_SOCKET_URL}`, { auth: { id: user.user?._id } });
+
+		const newSocket = io(`${process.env.NEXT_PUBLIC_SOCKET_URL}`, {
+			auth: { id: user.user?._id },
+		});
 		setSocket(newSocket);
+
 		if (!dataFetched) {
 			fetchData();
-			setDataFetch(true);
+			setDataFetched(true);
 		}
+
 		if (!socketConnected) {
-			newSocket.on("connect", () => setSocketConnected(true));
+			newSocket.on("connect", () => {
+				console.log("connected");
+
+				setSocketConnected(true);
+			});
 		}
-		newSocket.on("received-message", (data) => {
+
+		newSocket.on("received-message", async (data) => {
 			if (messages.length === 0) {
 				fetchData();
 			} else {
@@ -63,17 +83,22 @@ export default function Page() {
 							key.readBy.push(user.user?._id);
 						}
 					});
-					instance.post(`/messages/read`, { user: messageCopy[userIndex]._id }).then((res) => console.log("true"));
+					await instance
+						.post(`/messages/read`, { user: messageCopy[userIndex]._id })
+						.then((res) => console.log("true"))
+						.catch((error) => console.error("Error marking message as read:", error));
 				}
+
 				userIndex = messageCopy.findIndex((key: any) => key._id === data.id);
 				setMessages(messageCopy);
 				if (messageIndex === userIndex) setMessageIndex(userIndex);
 			}
+
 			setTimeout(() => {
-				if (ref.current != undefined) {
-					ref.current?.scrollTo(0, ref.current.scrollHeight);
+				if (ref.current) {
+					ref.current.scrollTo(0, ref.current.scrollHeight);
 				}
-			}, 200);
+			}, 400);
 		});
 
 		newSocket.on("send-message", (data) => {
@@ -90,11 +115,12 @@ export default function Page() {
 			}
 
 			setTimeout(() => {
-				if (ref.current != undefined) {
-					ref.current?.scrollTo(0, ref.current.scrollHeight);
+				if (ref.current) {
+					ref.current.scrollTo(0, ref.current.scrollHeight);
 				}
-			}, 200);
+			}, 400);
 		});
+
 		return () => {
 			newSocket.disconnect();
 		};
@@ -103,13 +129,17 @@ export default function Page() {
 	async function changeUser(position: number, id: string, unreads: number) {
 		if (unreads !== 0) {
 			let messageCopy = [...messages];
-			messageCopy[position]?.message.map((key: any) => {
+			messageCopy[position]?.message.forEach((key: any) => {
 				if (!key.readBy.includes(user.user?._id)) {
 					key.readBy.push(user.user?._id);
 				}
 			});
-			await instance.post(`/messages/read`, { user: messageCopy[position]._id }).then((res) => console.log("true"));
-			setMessages(messageCopy);
+			try {
+				await instance.post(`/messages/read`, { user: messageCopy[position]._id });
+				setMessages(messageCopy);
+			} catch (error) {
+				console.error("Error marking message as read:", error);
+			}
 		}
 		setMessageIndex(position);
 	}
@@ -119,8 +149,8 @@ export default function Page() {
 	}
 
 	function sendMessage(key: any) {
-		setText("");
 		if (text.length === 0) return;
+		setText("");
 		socket.emit("message", { message: text, id: key._id, sender: user.user?._id, index: messageIndex });
 	}
 
@@ -186,10 +216,7 @@ export default function Page() {
 							<div className="flex items-center gap-2">
 								<Avatar story={false} height={42} width={42} image={messages[messageIndex]?.avatar} />
 								<span>
-									<b>
-										{messages[messageIndex]?.fullname}
-										{messageIndex}
-									</b>
+									<b>{messages[messageIndex]?.fullname}</b>
 								</span>
 							</div>
 							<div className="hidden phone:block"></div>

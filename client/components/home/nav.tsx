@@ -13,7 +13,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import User from "./user";
 import { BsChevronLeft } from "react-icons/bs";
-
+import { Kalam } from "@next/font/google";
+const kalam = Kalam({
+	weight: "400",
+	subsets: ["latin"],
+});
 
 export default function Nav() {
 	const pathname = usePathname();
@@ -38,10 +42,10 @@ export default function Nav() {
 				<div className="flex items-center justify-center gap-5">
 					<div className="w-[250px] nestHub:grid nestHub:place-items-center">
 						{pathname === "/" ? (
-							<button className="title text-2xl font-bold">Moments</button>
+							<button className={`${kalam.className}  text-2xl font-bold`}>Moments</button>
 						) : (
 							<Link href={"/"} onClick={() => nprogress.start()}>
-								<button className="title text-2xl font-bold">Moments</button>
+								<button className={`${kalam.className}  text-2xl font-bold`}>Moments</button>
 							</Link>
 						)}
 					</div>
@@ -118,7 +122,7 @@ export default function Nav() {
 						/>
 					</button>
 				) : (
-					<span className="title text-2xl font-bold ">M</span>
+					<span className={`${kalam.className}  text-2xl font-bold`}>M</span>
 				)}
 				<Search type="nav" placeholder="Search here..." mobile={true} />
 				<div className="flex gap-5">

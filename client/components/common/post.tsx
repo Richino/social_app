@@ -527,7 +527,7 @@ export default function Post(props: IPost) {
 							alt="post"
 							height={500}
                      
-							width={isImagePortrait ? (over2k ? 474 : 500) : 1264}
+							width={isImagePortrait ? (over2k ? 474 : 500) : 1100}
 							quality={100}
 							onError={() => {
 								setErrorMessage("Image failed to load (dev too broke to upgrade storage)");
@@ -652,7 +652,7 @@ export default function Post(props: IPost) {
 				</div>
 			</div>
 
-			<div className="fixed bottom-0  hidden w-full  items-center justify-between gap-2 border-t border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900 phone:flex">
+			<div className="fixed bottom-0 z-[60] hidden w-full  items-center justify-between gap-2 border-t border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900 phone:flex">
 				<TypeComment id={props.id} />
 			</div>
 		</div>
