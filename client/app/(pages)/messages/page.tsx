@@ -115,6 +115,7 @@ export default function Page() {
 
 	useEffect(() => {
 		if (ref.current) {
+			ref.current.style.overflow = "scroll";
 			ref.current.scrollTo(0, ref.current.scrollHeight);
 		}
 	}, [messageIndex, messages]);
@@ -214,7 +215,10 @@ export default function Page() {
 							</div>
 							<div className="hidden phone:block"></div>
 						</div>
-						<div id="chat-container" ref={ref} className="message-box  phone:dark:bg-neutral-950 mt-[59px] phone:h-[calc(100svh-240px)] flex h-full flex-col-reverse gap-5 overflow-y-scroll p-5 phone:mb-0 phone:mt-0  ">
+						<div
+							id="chat-container"
+							ref={ref}
+							className="message-box  mt-[59px] flex h-full flex-col-reverse gap-5 overflow-y-scroll p-5 phone:mb-0 phone:mt-0 phone:h-[calc(100svh-240px)] phone:dark:bg-neutral-950  ">
 							{messages[messageIndex]?.message.map((key: any, position: number) => {
 								return (
 									<div key={position} className="w-full">
