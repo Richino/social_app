@@ -218,6 +218,7 @@ export default function Page() {
 						<div
 							id="chat-container"
 							className="message-box  mt-[59px] flex h-full flex-col-reverse gap-5 overflow-y-scroll p-5 phone:mb-0 phone:mt-0 phone:h-[calc(100svh-240px)] phone:dark:bg-neutral-950  ">
+							<div ref={ref}></div>
 							{messages[messageIndex]?.message.map((key: any, position: number) => {
 								return (
 									<div key={position} className="w-full">
@@ -232,7 +233,6 @@ export default function Page() {
 									</div>
 								);
 							})}
-							<div ref={ref}></div>
 						</div>
 						<div className=" bottom-0 z-50 flex  w-full  items-center justify-between gap-2 border-t border-neutral-200 p-5 dark:border-neutral-800 phone:border-b-0">
 							<input
