@@ -24,7 +24,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
 	cors: {
-		origin: process.env["PRODUCTION_URL"], // Corrected origin URL
+		origin: process.env["PRODUCTION_URL"], 
 		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 	},
 });
@@ -44,8 +44,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
 	cors({
-		origin: process.env["PRODUCTION_URL"], // Specify the allowed origin
-		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify which methods are allowed
+		origin: process.env["PRODUCTION_URL"],
+		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
 	})
 );
 
@@ -70,4 +70,3 @@ messagesSocket(io);
 
 server.listen(PORT, () => console.log("Server started: ", PORT));
 
-///remindeer to add mongodb connection to the server and firebase connection to the server

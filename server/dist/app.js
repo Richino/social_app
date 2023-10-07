@@ -42,7 +42,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     origin: process.env["PRODUCTION_URL"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Specify which methods are allowed
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 }));
 //routes
 app.use("/app", main);
@@ -61,5 +61,4 @@ app.use("/messages", messages);
 //socketss
 messagesSocket(io);
 server.listen(PORT, () => console.log("Server started: ", PORT));
-///remindeer to add mongodb connection to the server and firebase connection to the server
 //# sourceMappingURL=app.js.map

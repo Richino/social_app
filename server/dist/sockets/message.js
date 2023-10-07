@@ -18,7 +18,11 @@ function Messages(io) {
             next();
         }
     });
+    io.of("/messages").on("error", (error) => {
+        console.error("Socket.IO error:", error);
+    });
     io.of("/messages").on("connection", (socket) => {
+        console.log("connected");
         const userId = socket["user"];
         const sessionId = socket.id;
         users.set(sessionId, userId);
@@ -30,6 +34,7 @@ function Messages(io) {
             });
         });
         socket.on("message", (data) => __awaiter(this, void 0, void 0, function* () {
+            console.log("here");
             if (data.message.length === 0)
                 return;
             let recipientArray = [];
@@ -98,22 +103,20 @@ function Messages(io) {
                                 .catch((err) => console.log(err.message, 1));
                         }
                         else {
-                            yield Promise.all([
-                                client
-                                    .collection("users")
-                                    .updateOne({ _id: res["sender"] }, { $pull: { messages: new ObjectId(data.id) } })
-                                    .then((res) => {
-                                    console.log(res, "pulled");
-                                })
-                                    .catch((err) => console.log(err.message, 2)),
-                                client
-                                    .collection("users")
-                                    .updateOne({ _id: res["sender"] }, { $push: { messages: { $each: [new ObjectId(data.id)], $position: 0 } } })
-                                    .then((res) => {
-                                    console.log(res, "pushed");
-                                })
-                                    .catch((err) => console.log(err.message, 3)),
-                            ]);
+                            yield client
+                                .collection("users")
+                                .updateOne({ _id: res["sender"] }, { $pull: { messages: new ObjectId(data.id) } })
+                                .then((res) => {
+                                console.log(res, "pulled");
+                            })
+                                .catch((err) => console.log(err.message, 2));
+                            yield client
+                                .collection("users")
+                                .updateOne({ _id: res["sender"] }, { $push: { messages: { $each: [new ObjectId(data.id)], $position: 0 } } })
+                                .then((res) => {
+                                console.log(res, "pushed");
+                            })
+                                .catch((err) => console.log(err.message, 3));
                         }
                     }
                     else {
@@ -131,22 +134,20 @@ function Messages(io) {
                                 .catch((err) => console.log(err.message, 4));
                         }
                         else {
-                            yield Promise.all([
-                                client
-                                    .collection("users")
-                                    .updateOne({ _id: new ObjectId(data.id) }, { $pull: { messages: res["sender"] } })
-                                    .then((res) => {
-                                    console.log(res, "pushed");
-                                })
-                                    .catch((err) => console.log(err.message, 5)),
-                                client
-                                    .collection("users")
-                                    .updateOne({ _id: new ObjectId(data.id) }, { $push: { messages: { $each: [res["sender"]], $position: 0 } } })
-                                    .then((res) => {
-                                    console.log(res, "pulled");
-                                })
-                                    .catch((err) => console.log(err.message, 6)),
-                            ]);
+                            yield client
+                                .collection("users")
+                                .updateOne({ _id: new ObjectId(data.id) }, { $pull: { messages: res["sender"] } })
+                                .then((res) => {
+                                console.log(res, "pushed");
+                            })
+                                .catch((err) => console.log(err.message, 5));
+                            yield client
+                                .collection("users")
+                                .updateOne({ _id: new ObjectId(data.id) }, { $push: { messages: { $each: [res["sender"]], $position: 0 } } })
+                                .then((res) => {
+                                console.log(res, "pulled");
+                            })
+                                .catch((err) => console.log(err.message, 6));
                         }
                     }
                     else {

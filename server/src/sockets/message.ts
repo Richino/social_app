@@ -6,6 +6,7 @@ import { ObjectId } from "mongodb";
 
 function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
 	const users = new Map();
+
 	io.of("/messages").use((socket, next) => {
 		if (socket.handshake.auth["id"]) {
 			socket["user"] = socket.handshake.auth["id"];
@@ -13,7 +14,12 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 		}
 	});
 
+	io.of("/messages").on("error", (error) => {
+		console.error("Socket.IO error:", error);
+	});
+
 	io.of("/messages").on("connection", (socket) => {
+		console.log("connected");
 		const userId = socket["user"];
 		const sessionId = socket.id;
 		users.set(sessionId, userId);
@@ -27,6 +33,8 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 		});
 
 		socket.on("message", async (data) => {
+			console.log("here");
+
 			if (data.message.length === 0) return;
 			let recipientArray = [];
 			let senderArray = [];
