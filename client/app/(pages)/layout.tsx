@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { useRef, useEffect, useContext, useState } from "react";
+import { useRef, useEffect, useContext } from "react";
 import Bottomnav from "../../components/home/bottomnav";
 import Nav from "../../components/home/nav";
 import Sidenav from "../../components/home/sidenav";
@@ -16,6 +16,7 @@ import List from "../../components/common/list";
 import Error from "../../components/common/error";
 import Settings from "../../components/common/settings";
 import Logout from "../../components/common/logout";
+import TabletSearch from "../../components/common/tabletSearch";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	const pathname = usePathname();
@@ -34,15 +35,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 		setNotifications,
 		notifications,
 		list,
-		bottomNavOffset,
 		settings,
 		isErrorOpen,
+		tabletSearch,
+		setTabletSearch,
 	} = useContext(App);
 	const instance = axios.create({
 		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
 	});
-	console.log(process.env.NEXT_PUBLIC_URL);
 
 	useEffect(() => {
 		const searchInput = document.getElementById("search") as HTMLInputElement;
@@ -63,12 +64,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 				});
 		};
 		fetchData();
-	}, [pathname, bottomNavOffset]);
+	}, [pathname]);
+
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth > 1000 || window.innerWidth < 600) setTabletSearch(false);
+		};
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
 
 	return (!user?.loading && user.user) || pathname === "/login" || pathname === "/register" ? (
 		<div
 			ref={ref}
-			className={`main  w-screen  overflow-hidden  phone:max-h-[${bottomNavOffset}px]  phone:h-[${bottomNavOffset}px] phone:w-full tablet:flex tablet:phone:block`}>
+			className={`main  w-screen overflow-hidden phone:h-[calc(100svh)] phone:w-full tablet:flex tablet:phone:block`}>
 			{pathname === "/login" || pathname === "/register" ? null : <Nav />}
 			{pathname === "/login" || pathname === "/register" ? null : <Sidenav />}
 			{createPost && <Create />}
@@ -90,9 +102,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 			{pathname === "/login" || pathname === "/register" ? null : <Bottomnav />}
 			{settings.isSettingOpen && <Settings />}
 			{isErrorOpen && <Error />}
+			{tabletSearch && <TabletSearch />}
 		</div>
 	) : (
-		<div className={`relative grid h-full w-full place-items-center text-2xl dark:bg-neutral-950 phone:h-[${bottomNavOffset}px] `}>
+		<div className={`relative grid h-full w-full place-items-center text-2xl dark:bg-neutral-950 phone:h-[calc(100svh)] `}>
 			<div className="circle"> </div>
 		</div>
 	);

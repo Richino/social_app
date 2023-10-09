@@ -49,13 +49,15 @@ router.post("/follow/:id", auth, (req, res) => __awaiter(void 0, void 0, void 0,
                     notification.save();
                 });
             }
-            yield client.collection("users").updateOne({ _id: new ObjectId(req.user.id) }, { $push: { following: id } });
-            yield client.collection("users").updateOne({ _id: new ObjectId(id) }, { $push: { followers: req.user.id } });
+            const updateUserFollowing = client.collection("users").updateOne({ _id: new ObjectId(req.user.id) }, { $push: { following: id } });
+            const updateUserFollowers = client.collection("users").updateOne({ _id: new ObjectId(id) }, { $push: { followers: req.user.id } });
+            yield Promise.all([updateUserFollowing, updateUserFollowers]);
             return res.status(200).json(true);
         }
         else {
-            yield client.collection("users").updateOne({ _id: new ObjectId(req.user.id) }, { $pull: { following: id } });
-            yield client.collection("users").updateOne({ _id: new ObjectId(id) }, { $pull: { followers: req.user.id } });
+            const updateUserFollowing = client.collection("users").updateOne({ _id: new ObjectId(req.user.id) }, { $pull: { following: id } });
+            const updateUserFollowers = client.collection("users").updateOne({ _id: new ObjectId(id) }, { $pull: { followers: req.user.id } });
+            yield Promise.all([updateUserFollowing, updateUserFollowers]);
             return res.status(200).json(true);
         }
     }

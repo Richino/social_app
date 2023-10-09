@@ -63,9 +63,6 @@ router.post("/", auth, async (req: any, res: Response) => {
 				},
 			])
 			.toArray();
-
-		console.log(feeds);
-
 		return res.status(200).json(feeds);
 	} catch (error) {
 		(await session).abortTransaction();

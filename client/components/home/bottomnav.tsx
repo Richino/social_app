@@ -20,8 +20,8 @@ export default function Bottomnav() {
 		setBottomNavOffset(ref.current?.offsetTop);
 	}, []);
 	return (
-		<div ref={ref} className="fixed bottom-0 left-0 z-50 hidden w-full items-center justify-center gap-12 border-t border-slate-200 bg-white p-2 tablet:phone:flex dark:bg-neutral-900  dark:border-neutral-800">
-			<div className="flex  items-center  gap-12">
+		<div ref={ref} className="fixed bottom-0 left-0 z-50 hidden w-full items-center justify-center gap-5 border-t border-slate-200 bg-white p-2 tablet:phone:flex dark:bg-neutral-900  dark:border-neutral-800">
+			<div className="flex  items-center  gap-5 w-full justify-between px-5">
 				{pathname === "/" ? (
 					<Link href={"/"}>
 						<AiFillHome className="hover:cursor-pointer" size={24} />

@@ -11,7 +11,7 @@ export default function Create() {
 	const [url, setUrl] = useState<any>("");
 	const [value, setValue] = useState("");
 	const [image, setImage] = useState<any>("");
-	const { user, openCreatePost, setUserProfile, userProfile, setChangeProfile,setErrorOpen,setErrorMessage } = useContext(App);
+	const { user, openCreatePost, setUserProfile, userProfile, setErrorOpen, setErrorMessage } = useContext(App);
 	const instance = axios.create({
 		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
@@ -33,7 +33,6 @@ export default function Create() {
 						) : (
 							<BsChevronLeft size={24} className=" hover:cursor-pointer" onClick={() => setIndex(index - 1)} />
 						)}
-
 						<span>
 							<b>Create new post</b>
 						</span>
@@ -62,9 +61,9 @@ export default function Create() {
 											openCreatePost(false);
 										})
 										.catch((err) => {
-                                            setErrorMessage(err.response.data)
-                                            setErrorOpen(true)
-                                        });
+											setErrorMessage(err.response.data);
+											setErrorOpen(true);
+										});
 								}}>
 								<b>Post</b>
 							</button>

@@ -12,13 +12,13 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 const router = Router();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(1);
     const token = jwt.sign({ id: "" }, process.env["SECRET"], {
         expiresIn: "1ms",
     });
     res.cookie("auth", token, {
         httpOnly: true,
-        sameSite: "strict",
+        secure: true,
+        sameSite: "none",
         maxAge: 1,
     });
     return res.status(200).send("User logged out");

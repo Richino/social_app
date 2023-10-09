@@ -3,7 +3,7 @@ import Avatar from "../common/avatar";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import Search from "./search";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname} from "next/navigation";
 import { AiFillHeart, AiOutlineHeart, AiOutlineLogout } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import nprogress from "nprogress";

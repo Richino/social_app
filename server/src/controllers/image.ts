@@ -33,10 +33,8 @@ router.post("/post/upload", auth, upload.any(), async (req: any, res: Response) 
 					caption,
 					imageUrl,
 				});
-
 				post.save((err, post) => {
 					if (err) {
-						
 					}
 					client.close();
 					return res.status(200).json(post);

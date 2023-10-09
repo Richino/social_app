@@ -34,13 +34,13 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // Assuming you have retrieved the user from the login process
         // Set the cookie
         const token = jwt.sign({ id: user._id }, process.env["SECRET"], {
-            expiresIn: "5h",
+            expiresIn: "2d",
         });
         res.cookie("auth", token, {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            maxAge: 5 * 60 * 60 * 1000,
+            maxAge: 2 * 24 * 60 * 60 * 1000,
         });
         res.status(200).json(token);
     }

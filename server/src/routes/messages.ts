@@ -1,8 +1,7 @@
 import { Router, Response } from "express";
 import auth from "../auth/index.js";
-//import { IRequest } from "../interfaces/index.js";
 import connectDB from "../config/mongodb.js";
-import { ObjectId, Document, Collection } from "mongodb";
+import { ObjectId, Document } from "mongodb";
 const router = Router();
 
 export interface IMessage extends Document {
@@ -92,7 +91,7 @@ router.get("/", auth, async (req: any, res: Response) => {
 				},
 			])
 			.toArray();
-	
+
 		return res.status(200).json(users);
 	} catch (error) {
 		(await session).abortTransaction();
@@ -102,7 +101,7 @@ router.get("/", auth, async (req: any, res: Response) => {
 });
 
 router.post("/user/:id", auth, async (req: any, res: Response) => {
-	const { id } = req.params
+	const { id } = req.params;
 	const client = await connectDB();
 	const session = client.startSession();
 	(await session).startTransaction();
@@ -160,15 +159,6 @@ router.post("/read", auth, async (req: any, res: Response) => {
 				recipient: { $in: users },
 			})
 			.toArray();
-
-		/*const sender = await client.collection("users").findOne({ _id: new ObjectId(req.user.id) });
-		const recipient = await client.collection("users").findOne({ _id: new ObjectId(user) });
-		let senderMessage = [...sender["messages"]];
-		let recipientMessage = [...recipient["messages"]];
-		let senderMessageIndex = senderMessage.map((e) => e).indexOf(user);
-		let recipientMessageIndex = recipientMessage.map((e) => e).indexOf(req.user.id);
-		console.log({ senderMessageIndex, senderMessage, sender: user }, { recipientMessageIndex, recipientMessage, recipient: req.user.id });*/
-
 
 		for (const message of messages) {
 			if (!message["readBy"].includes(req.user.id)) {

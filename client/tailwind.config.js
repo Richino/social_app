@@ -16,6 +16,8 @@ module.exports = {
 			tablet: { max: "1000px" },
 			overPhone: { max: "601px" },
 			overPhone2: { min: "601px" },
+			under1: { max: "1000px" },
+         
 		},
 	},
 	plugins: [],

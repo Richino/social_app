@@ -5,7 +5,7 @@ import { App } from "../../app/context";
 export default function Logout() {
 	const router = useRouter();
 	const ref = useRef<HTMLDivElement>(null);
-	const { setLogout } = useContext(App);
+	const { setLogout,setSettings, settings } = useContext(App);
 	const instance = axios.create({
 		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
@@ -30,6 +30,7 @@ export default function Logout() {
 					className="border-b border-neutral-200 py-4 text-red-500 dark:border-neutral-800"
 					onClick={() => {
 						instance.post(`/logout`).then(() => {
+							setSettings({ ...settings, isSettingOpen: false });
 							setLogout(false);
 							router.push("/login");
 						});

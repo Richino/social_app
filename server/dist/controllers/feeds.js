@@ -69,7 +69,6 @@ router.post("/", auth, (req, res) => __awaiter(void 0, void 0, void 0, function*
             },
         ])
             .toArray();
-        console.log(feeds);
         return res.status(200).json(feeds);
     }
     catch (error) {

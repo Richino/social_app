@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Router } from "express";
 import auth from "../auth/index.js";
-//import { IRequest } from "../interfaces/index.js";
 import connectDB from "../config/mongodb.js";
 import { ObjectId } from "mongodb";
 const router = Router();
@@ -156,13 +155,6 @@ router.post("/read", auth, (req, res) => __awaiter(void 0, void 0, void 0, funct
             recipient: { $in: users },
         })
             .toArray();
-        /*const sender = await client.collection("users").findOne({ _id: new ObjectId(req.user.id) });
-        const recipient = await client.collection("users").findOne({ _id: new ObjectId(user) });
-        let senderMessage = [...sender["messages"]];
-        let recipientMessage = [...recipient["messages"]];
-        let senderMessageIndex = senderMessage.map((e) => e).indexOf(user);
-        let recipientMessageIndex = recipientMessage.map((e) => e).indexOf(req.user.id);
-        console.log({ senderMessageIndex, senderMessage, sender: user }, { recipientMessageIndex, recipientMessage, recipient: req.user.id });*/
         for (const message of messages) {
             if (!message["readBy"].includes(req.user.id)) {
                 message["readBy"].push(req.user.id);

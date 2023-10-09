@@ -1,7 +1,7 @@
 import Avatar from "../common/avatar";
 import { UserProps } from "../../app/(interface)/user";
 export default function User(props: UserProps) {
-   console.log(props.type);
+   console.log(props.type );
    
 	return (
 		<div className="flex w-full gap-2 overflow-hidden">
@@ -10,7 +10,7 @@ export default function User(props: UserProps) {
 				<span
 					className={`${
 						props.type == "message"
-							? "w-[260px]"
+							? "w-[260px] under1:w-full"
 							: props.type === "create-post"
 							? "w-[320px] phone:w-[120px]"
 							: props.type === "list"

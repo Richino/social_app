@@ -1,8 +1,6 @@
 import "dotenv/config";
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-//import { IRequest } from "../interfaces";
-import { IIncomingMessage } from "../interfaces";
 const secret = process.env["SECRET"];
 
 //possible to has the cookie
@@ -10,14 +8,29 @@ const secret = process.env["SECRET"];
 export default function auth(req: any, res: Response, next: NextFunction) {
 	const auth = req.cookies.auth;
 	if (!auth) return res.status(401).send("Unauthorized");
-	const token = jwt.verify(auth, secret);
-	req.user = token;
-	const now = Date.now();
-	const tokenExpTime = token["exp"] * 1000;
-	const oneHour = 60 * 60 * 1000;
-	/* if (tokenExpTime - now <= oneHour) {
-    //console.log(:) // token is about to expire in 1 hou r or less
-  }*/
+	try {
+		const token = jwt.verify(auth, secret);
+		const currentTime = Math.floor(Date.now() / 1000);
+		const expirationTime = token.exp - currentTime;
+		const oneHour = 3600;
+		if (expirationTime < oneHour) {
+			const newToken = jwt.sign({ id: token.id }, secret, {
+				expiresIn: "2d",
+			});
 
-	next();
+			res.cookie("auth", newToken, {
+				httpOnly: true,
+				secure: true,
+				sameSite: "none",
+				maxAge: 2 * 24 * 60 * 60 * 1000,
+			});
+
+			req.user = jwt.verify(newToken, secret);
+		} else {
+			req.user = token;
+		}
+		next();
+	} catch (err) {
+		return res.status(401).send("Unauthorized");
+	}
 }

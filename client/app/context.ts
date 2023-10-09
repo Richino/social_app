@@ -4,6 +4,8 @@ import { createContext, useState } from "react";
 import { User, UserProfile, Notifications, List, Comments, Settings, Search } from "./(interface)/context";
 
 interface MyContext {
+	tabletSearch: boolean;
+	setTabletSearch: (value: boolean) => void;
 	settings: Settings;
 	setSettings: (value: Settings) => void;
 	popup: boolean;
@@ -51,6 +53,8 @@ interface MyContext {
 }
 
 export const App = createContext<MyContext>({
+	tabletSearch: false,
+	setTabletSearch: () => {},
 	messageId: "",
 	setMessageId: () => {},
 	isErrorOpen: false,
@@ -132,7 +136,10 @@ export const useMyContext = () => {
 	const [isLogoutOpen, setLogout] = useState(false);
 	const [isErrorOpen, setErrorOpen] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
+	const [tabletSearch, setTabletSearch] = useState(false);
 	return {
+		tabletSearch,
+		setTabletSearch,
 		messageId,
 		setMessageId,
 		errorMessage,

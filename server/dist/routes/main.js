@@ -9,11 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Router } from "express";
 import auth from "../auth/index.js";
-//import { IRequest } from "../interfaces/index.js";
 import connectDB from "../config/mongodb.js";
 import { ObjectId } from "mongodb";
 const router = Router();
-//
 router.get("/", auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const client = yield connectDB();
     const session = client.startSession();

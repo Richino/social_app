@@ -4,6 +4,53 @@ import connectDB from "../config/mongodb.js";
 import { Message } from "../models/model.js";
 import { ObjectId } from "mongodb";
 
+async function updateUserMessages(messages: any, id_1: any, id_2: any, client: any) {
+	console.log(id_1, id_2);
+	if (messages !== undefined) {
+		const containsObjectId = messages.map((objId: any) => objId.toString()).includes(id_2.toString());
+
+		if (!containsObjectId) {
+			await client
+				.collection("users")
+				.updateOne({ _id: id_1 }, { $push: { messages: { $each: [id_2], $position: 0 } } })
+				.catch((err) => console.log(err.message));
+		} else {
+			let array = [...messages];
+			const ID = id_2;
+
+			let index = array.findIndex((item) => item.toString() === ID.toString());
+			if (index !== -1) {
+				let id = array.splice(index, 1)[0];
+				array.unshift(id);
+
+				await client
+					.collection("users")
+					.updateOne(
+						{ _id: id_2 },
+						{
+							$set: {
+								messages: array,
+							},
+						}
+					)
+					.then(() => {
+						console.log("Message updated successfully - sender");
+					})
+					.catch((err) => {
+						console.log(err.message);
+					});
+			} else {
+				console.log("Message not found in the array.");
+			}
+		}
+	} else {
+		await client
+			.collection("users")
+			.updateOne({ _id: id_1 }, { $push: { messages: { $each: [id_2], $position: 0 } } })
+			.catch((err) => console.log(err.message));
+	}
+}
+
 function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
 	const users = new Map();
 
@@ -19,7 +66,6 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 	});
 
 	io.of("/messages").on("connection", (socket) => {
-		console.log("connected");
 		const userId = socket["user"];
 		const sessionId = socket.id;
 		users.set(sessionId, userId);
@@ -33,11 +79,11 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 		});
 
 		socket.on("message", async (data) => {
-			console.log("here");
-
 			if (data.message.length === 0) return;
+
 			let recipientArray = [];
 			let senderArray = [];
+
 			users.forEach((key, value) => {
 				if (key === data.id) recipientArray.push(value);
 			});
@@ -49,6 +95,7 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 			const client = await connectDB();
 			const session = client.startSession();
 			(await session).startTransaction();
+
 			try {
 				const message = new Message({
 					sender: socket["user"],
@@ -89,69 +136,13 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 							])
 							.toArray(),
 					]);
+
 					let sender = senderUser[0];
 					let recepient = recepientUser[0];
-					let s = res["sender"];
-					let r = res["recipient"];
-					if (sender["messages"] !== undefined) {
-						const containsObjectId = sender["messages"].map((objId: any) => objId.toString()).includes(r.toString());
-						if (!containsObjectId) {
-							await client
-								.collection("users")
-								.updateOne({ _id: res["sender"] }, { $push: { messages: { $each: [new ObjectId(data.id)], $position: 0 } } })
-								.catch((err) => console.log(err.message, 1));
-						} else {
-							await client
-								.collection("users")
-								.updateOne({ _id: res["sender"] }, { $pull: { messages: new ObjectId(data.id) } })
-								.then((res) => {
-									console.log(res, "pulled");
-								})
-								.catch((err) => console.log(err.message, 2));
-							await client
-								.collection("users")
-								.updateOne({ _id: res["sender"] }, { $push: { messages: { $each: [new ObjectId(data.id)], $position: 0 } } })
-								.then((res) => {
-									console.log(res, "pushed");
-								})
-								.catch((err) => console.log(err.message, 3));
-						}
-					} else {
-						await client
-							.collection("users")
-							.updateOne({ _id: res["sender"] }, { $push: { messages: { $each: [new ObjectId(data.id)], $position: 0 } } })
-							.catch((err) => console.log(err.message, 3));
-					}
 
-					if (recepient["messages"] !== undefined) {
-						const containsObjectId = recepient["messages"].map((objId: any) => objId.toString()).includes(s.toString());
-						if (!containsObjectId) {
-							await client
-								.collection("users")
-								.updateOne({ _id: new ObjectId(data.id) }, { $push: { messages: { $each: [res["sender"]], $position: 0 } } })
-								.catch((err) => console.log(err.message, 4));
-						} else {
-							await client
-								.collection("users")
-								.updateOne({ _id: new ObjectId(data.id) }, { $pull: { messages: res["sender"] } })
-								.then((res) => {
-									console.log(res, "pushed");
-								})
-								.catch((err) => console.log(err.message, 5));
-							await client
-								.collection("users")
-								.updateOne({ _id: new ObjectId(data.id) }, { $push: { messages: { $each: [res["sender"]], $position: 0 } } })
-								.then((res) => {
-									console.log(res, "pulled");
-								})
-								.catch((err) => console.log(err.message, 6));
-						}
-					} else {
-						await client
-							.collection("users")
-							.updateOne({ _id: new ObjectId(data.id) }, { $push: { messages: { $each: [res["sender"]], $position: 0 } } })
-							.catch((err) => console.log(err.message, 6));
-					}
+					await updateUserMessages(sender["messages"], res["sender"], res["recipient"], client);
+					await updateUserMessages(recepient["messages"], res["recipient"], res["sender"], client);
+
 
 					delete res["__v"];
 					delete res["createdAt"];
@@ -162,7 +153,6 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 					if (senderArray.length != 0) {
 						senderArray.forEach((id) => socket.to(id).emit("send-message", msg));
 					}
-
 					socket.emit("send-message", msg);
 				});
 			} catch (error) {

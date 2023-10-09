@@ -47,14 +47,13 @@ export default function Home() {
 	return (
 		<div
 			ref={ref}
-			className={`feeds  flex h-[calc(100%-58px)] w-full justify-center  gap-5 overflow-y-auto bg-neutral-100 tablet:h-[100svh] dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px] phone:h-[calc(100%-(59px+52px))]`}
+			className={`feeds  flex h-[calc(100%-58px)] w-full justify-center  gap-5 overflow-y-auto bg-neutral-100 overPhone2:h-[100svh] dark:bg-neutral-950 phone:fixed phone:top-[57px]  phone:h-[calc(100svh-116px)]`}
 			onScroll={fetchFeeds}>
 			<div className=" cool sticky top-[0px] w-[250px] shrink-0 space-y-5 overflow-y-auto py-5 tablet:hidden">
 				<Activity />
 			</div>
 			<div className="jusify-center flex h-max w-[400px] flex-col items-center gap-5 py-5  tablet:phone:w-full">
-				{/*<Stories />*/}
-				{user.feed?.map((key: any, value: number) => {
+         {user.feed?.map((key: any, value: number) => {
 					return (
 						<PostFeed
 							fullname={key.author_fullname}

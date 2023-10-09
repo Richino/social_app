@@ -76,7 +76,7 @@ export default function List() {
 			id="popup"
 			className=" fixed left-0 top-0 z-[100] grid h-full w-full place-items-center bg-black/80 phone:w-full phone:flex-col phone:overflow-y-auto phone:bg-neutral-100"
 			onClick={hidePopup}>
-			<div className="flex h-[400px] w-full  max-w-[400px] flex-col  rounded-md phone:rounded-none bg-white font-bold dark:bg-neutral-900 phone:h-full phone:w-full phone:max-w-none">
+			<div className="flex h-[400px] w-full  max-w-[400px] flex-col  rounded-md bg-white font-bold dark:bg-neutral-900 phone:h-full phone:w-full phone:max-w-none phone:rounded-none">
 				<div className="flex items-center  justify-between border-b border-neutral-200 p-5 dark:border-neutral-800">
 					<BsChevronLeft size={24} className=" hover:cursor-pointer" onClick={() => setList({ type: "", open: false, _id: "" })} />
 					{list.type}
@@ -89,14 +89,14 @@ export default function List() {
 								<div className="circle" />
 							</div>
 						) : !loading && data.length === 0 ? (
-							<div className="grid h-full place-items-center">No one liked this comment yet</div>
+							<div className="grid h-full place-items-center">Nothing here</div>
 						) : (
 							<>
 								{data.map((key: any, index: number) => {
 									return (
 										<Link key={index} href={`/${list.type === "New Message" ? "messages" : key.username}`} onClick={() => messageUser(key, index)}>
 											<div className="flex items-center justify-center p-2 hover:cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-800">
-												<User fullname={key.fullname} avatar={key.avatar} usernameOrText={key.username} type="list"/>
+												<User fullname={key.fullname} avatar={key.avatar} usernameOrText={key.username} type="list" />
 												{/*<div>
 													{user.user?.following?.includes(key._id) && list.type !== "New Message" ? (
 														<button className="self-start rounded bg-violet-500 p-1 px-5 text-white ">Unfollow</button>

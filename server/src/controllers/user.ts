@@ -42,12 +42,14 @@ router.post("/follow/:id", auth, async (req: any, res: Response) => {
 						notification.save();
 					});
 			}
-			await client.collection("users").updateOne({ _id: new ObjectId(req.user.id) }, { $push: { following: id } });
-			await client.collection("users").updateOne({ _id: new ObjectId(id) }, { $push: { followers: req.user.id } });
+			const updateUserFollowing = client.collection("users").updateOne({ _id: new ObjectId(req.user.id) }, { $push: { following: id } });
+			const updateUserFollowers = client.collection("users").updateOne({ _id: new ObjectId(id) }, { $push: { followers: req.user.id } });
+			await Promise.all([updateUserFollowing, updateUserFollowers]);
 			return res.status(200).json(true);
 		} else {
-			await client.collection("users").updateOne({ _id: new ObjectId(req.user.id) }, { $pull: { following: id } });
-			await client.collection("users").updateOne({ _id: new ObjectId(id) }, { $pull: { followers: req.user.id } });
+			const updateUserFollowing = client.collection("users").updateOne({ _id: new ObjectId(req.user.id) }, { $pull: { following: id } });
+			const updateUserFollowers = client.collection("users").updateOne({ _id: new ObjectId(id) }, { $pull: { followers: req.user.id } });
+			await Promise.all([updateUserFollowing, updateUserFollowers]);
 			return res.status(200).json(true);
 		}
 	} catch (error) {
@@ -91,7 +93,6 @@ router.post("/like/:id", auth, async (req: any, res: Response) => {
 		}
 	} catch (error) {
 		(await session).abortTransaction();
-		
 	} finally {
 		(await session).endSession();
 	}
@@ -250,7 +251,6 @@ router.post("/get-list", auth, async (req: any, res: Response) => {
 			])
 			.toArray();
 
-		
 		return res.status(200).json(users);
 	} catch (error) {
 		(await session).abortTransaction();

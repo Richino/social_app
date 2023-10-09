@@ -1,8 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
-
 
 html,
 body {
@@ -29,13 +27,7 @@ textarea {
 	height: 100vh;
 }
 
-.xxx {
-	max-height: 100%;
-	max-width: 100%;
-	-webkit-text-size-adjust: 100%;
-	touch-action: manipulation;
-	outline: none;
-}
+
 
 input:focus {
 	outline: none;
@@ -102,88 +94,6 @@ input:focus {
 		font-size: 16px;
 	}
 
-	.message-box {
-		height: 100%;
-		width: 100%;
-		padding: 0px;
-		overflow-x: hidden;
-	}
-
-	.message-container {
-		height: 100%;
-		width: 100%;
-		padding: 0px;
-		overflow-x: hidden;
-	}
-
-	.users {
-		max-width: none;
-	}
-
-	.message-button-circle {
-		display: grid;
-	}
-
-	.messages {
-		z-index: 50;
-		position: absolute;
-		top: 0px;
-		left: 74px;
-		width: calc(100% - 73px) !important;
-	}
-
-	.message-container {
-		display: block;
-		border-width: 0px;
-	}
-
-	.new-message {
-		display: none;
-	}
-
-	.message-user-title {
-		display: grid;
-		place-items: center;
-	}
-
-	.message-user-cheveron {
-		display: block !important;
-		position: absolute;
-	}
-
-	.comments-box {
-		width: 100%;
-	}
-
-	#post-image-container {
-		display: block;
-		padding: 0px;
-	}
-
-	.close {
-		display: none;
-	}
-
-	.post-title {
-		display: flex;
-		min-height: 83px;
-	}
-
-	.post-image-container {
-		background: black;
-		height: calc(100% - 83px);
-	}
-
-	.threedots {
-		display: none;
-	}
-	.messageInbox {
-		width: calc(100% - 73px) !important;
-	}
-
-	.feeds {
-		height: 100%;
-	}
 }
 .flex-middle {
 	display: none !important;
