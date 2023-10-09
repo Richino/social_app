@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 const secret = process.env["SECRET"];
 
 //possible to has the cookie
@@ -9,12 +9,14 @@ export default function auth(req: any, res: Response, next: NextFunction) {
 	const auth = req.cookies.auth;
 	if (!auth) return res.status(401).send("Unauthorized");
 	try {
-		const token = jwt.verify(auth, secret);
+		const token = jwt.verify(auth, secret) as JwtPayload;
 		const currentTime = Math.floor(Date.now() / 1000);
 		const expirationTime = token.exp - currentTime;
+		console.log(token);
+
 		const oneHour = 3600;
 		if (expirationTime < oneHour) {
-			const newToken = jwt.sign({ id: token.id }, secret, {
+			const newToken = jwt.sign({ id: token["id"] }, secret, {
 				expiresIn: "2d",
 			});
 
