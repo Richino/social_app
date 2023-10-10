@@ -80,7 +80,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	return (!user?.loading && user.user) || pathname === "/login" || pathname === "/register" ? (
 		<div
 			ref={ref}
-			className={`main  w-screen overflow-hidden phone:h-[calc(100svh)] phone:w-full tablet:flex tablet:phone:block`}>
+			className={` w-screen overflow-hidden phone:h-[100svh] phone:w-full tablet:flex tablet:phone:block`}>
 			{pathname === "/login" || pathname === "/register" ? null : <Nav />}
 			{pathname === "/login" || pathname === "/register" ? null : <Sidenav />}
 			{createPost && <Create />}
@@ -105,7 +105,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 			{tabletSearch && <TabletSearch />}
 		</div>
 	) : (
-		<div className={`relative grid h-full w-full place-items-center text-2xl dark:bg-neutral-950 phone:h-[calc(100svh)] `}>
+		<div className={`relative grid h-full w-full place-items-center text-2xl dark:bg-neutral-950 phone:h-[100svh] `}>
 			<div className="circle"> </div>
 		</div>
 	);

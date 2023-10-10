@@ -5,7 +5,6 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-
 export default function Page() {
 	const router = useRouter();
 	const [error, setError] = useState(false);
@@ -52,7 +51,7 @@ export default function Page() {
 	}
 
 	return (
-		<div className="relative flex h-screen w-screen overflow-hidden  overflow-y-auto text-xs dark:bg-neutral-900">
+		<div className="relative flex h-screen w-screen overflow-hidden  overflow-y-auto text-xs dark:bg-neutral-900 phone:min-h-[100svh] ">
 			<div className=" margin-b-24 flex w-[38vw] min-w-[500px] flex-col items-center justify-center  p-14 phone:h-screen phone:w-full phone:min-w-[100%] landscape:min-w-[400px] landscape:p-10 phone:landscape:block">
 				<form onSubmit={login} className="flex w-[80%] flex-col space-y-5 text-neutral-800 phone:w-[100%]">
 					<span className="text-4xl font-bold text-neutral-700 dark:text-neutral-200">Login</span>
