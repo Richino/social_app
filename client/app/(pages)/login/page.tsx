@@ -4,6 +4,7 @@ import Gallery from "../../../components/common/gallery";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Head from "next/head";
 
 export default function Page() {
 	const router = useRouter();

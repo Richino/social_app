@@ -227,7 +227,7 @@ export function Popup(props: Popup) {
 				setPopup(false);
 			})
 			.catch((err) => {
-				//console.log(err);
+				console.log(err);
 			});
 	}
 
@@ -369,10 +369,7 @@ export default function Post(props: IPost) {
 	const postImageContainer2Ref = useRef<HTMLDivElement>(null);
 	const [loading, setLoading] = useState(false);
 	const [width, setWidth] = useState(window.innerWidth);
-	const [isImagePortrait, setIsImagePortrait] = useState(false);
-	const [imageType, setImageType] = useState("contain");
 	const [imageLoaded, setImageLoaded] = useState(false);
-	const [over2k, setOver2k] = useState(false);
 	const [picWidth, setPicWidth] = useState("");
 	const { setPost, user, comments, setComments, userPost, setUser, userProfile, setUserProfile, popup, setPopup, setErrorMessage, setErrorOpen } = useContext(App);
 
@@ -468,7 +465,7 @@ export default function Post(props: IPost) {
 
 	useEffect(() => {
 		fetchData();
-		const img = new Image(); // Renamed to "img"
+		const img = new Image();
 		img.src = props.post;
 
 		img.onload = () => {
@@ -476,9 +473,6 @@ export default function Post(props: IPost) {
 			const imageHeight = img.height;
 			console.log(imageWidth, imageHeight);
 			setImageLoaded(true);
-			setIsImagePortrait(imageHeight > imageWidth);
-			setOver2k(imageHeight > 2000);
-
 			imageHeight > imageWidth ? (imageHeight > 2000 ? setPicWidth("w-[474px]") : setPicWidth("w-[500px]")) : setPicWidth("w-[1100px]");
 		};
 		const handleResize = () => {
@@ -545,9 +539,7 @@ export default function Post(props: IPost) {
 							id="post-image"
 							src={props.post}
 							alt="post"
-							//height={500}
 							fill
-							//width={isImagePortrait ? (over2k ? 474 : 500) : 1100}
 							quality={100}
 							onError={() => {
 								setErrorMessage("Image failed to load (dev too broke to upgrade storage)");
