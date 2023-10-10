@@ -41,12 +41,6 @@ export default function Page() {
 	}
 
 	useEffect(() => {
-		if (ref.current) {
-			ref.current.scrollTo(0, ref.current.scrollHeight);
-		}
-	}, [messageIndex]);
-
-	useEffect(() => {
 		const newSocket = io(`${process.env.NEXT_PUBLIC_SOCKET_URL}`, {
 			auth: { id: user.user?._id },
 		});
@@ -92,7 +86,7 @@ export default function Page() {
 			}
 		});
 
-		newSocket.on("send-message", (data) => {
+		newSocket.on("send-message", async (data) => {
 			if (messages.length === 0) {
 				fetchData();
 			} else {
@@ -104,18 +98,16 @@ export default function Page() {
 				setMessageIndex(0);
 				setMessages(messageCopy);
 			}
+
+			if (ref.current) {
+				ref.current.scrollIntoView({ behavior: "smooth" });
+			}
 		});
 
 		return () => {
 			newSocket.disconnect();
 		};
 	}, [messages, messageIndex]);
-
-	useEffect(() => {
-		if (ref.current) {
-			ref.current.scrollIntoView({ behavior: "smooth" });
-		}
-	}, [messageIndex, messages]);
 
 	async function changeUser(position: number, id: string, unreads: number) {
 		if (unreads !== 0) {
@@ -158,10 +150,10 @@ export default function Page() {
 	}
 	return (
 		<div
-			className={`flex h-[calc(100%-58px)] w-full tablet:w-[calc(100%-73px)] overPhone:w-full flex-shrink-0 flex-col  items-center gap-5 overflow-y-scroll bg-neutral-100 p-5 text-sm dark:bg-neutral-950 phone:fixed phone:top-[52px]  phone:mb-[60px] phone:h-[calc(100%-(60px+50px))]  tablet:phone:block tablet:p-0 under1:h-full`}>
-			<div className=" flex h-full w-full phone:w-screen  border  border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900 phone:relative phone:block phone:h-[100svh] phone:border-0">
-         <div
-					className={` w-[380px] overPhone:w-full  overflow-y-auto border-r border-neutral-200 dark:border-neutral-800   phone:max-w-full   phone:${
+			className={`flex h-[calc(100%-58px)] w-full flex-shrink-0 flex-col items-center gap-5  overflow-y-scroll bg-neutral-100 p-5 text-sm dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px] phone:h-[calc(100%-(60px+50px))]  tablet:w-[calc(100%-73px)] tablet:p-0  tablet:phone:block overPhone:w-full under1:h-full`}>
+			<div className=" flex h-full w-full border  border-neutral-200  bg-white dark:border-neutral-800 dark:bg-neutral-900 phone:relative phone:block phone:h-[100svh] phone:w-screen phone:border-0">
+				<div
+					className={` w-[380px] overflow-y-auto  border-r border-neutral-200 dark:border-neutral-800 phone:max-w-full   overPhone:w-full   phone:${
 						messageIndex !== -1 && "hidden"
 					}`}>
 					<div className=" sticky top-0  flex min-h-[59px] items-center justify-between border-b border-neutral-200 p-2  px-5 dark:border-neutral-800  phone:mb-5 phone:min-h-[83px]">
@@ -188,7 +180,7 @@ export default function Page() {
 					})}
 				</div>
 				<div
-					className={`h-full overflow-hidden w-full  phone:z-[90]    phone:${messageIndex < 0 && "hidden"} ${
+					className={`h-full w-full overflow-hidden  phone:z-[90]    phone:${messageIndex < 0 && "hidden"} ${
 						messageIndex < 0 && "new-message"
 					} phone:fixed phone:top-[52px] phone:mb-[60px] phone:h-[calc(100%-(60px+52px))]`}>
 					<div className={`${messageIndex < 0 ? "flex" : "hidden"} new-message h-full flex-col items-center justify-center gap-5 phone:hidden`}>
@@ -199,11 +191,8 @@ export default function Page() {
 							Send message
 						</button>
 					</div>
-					<div
-						className={`${
-							messageIndex >= 0 ? "flex " : "hidden"
-						}   p-5" relative mt-[60px] h-full w-full flex-col overflow-hidden php  bg-white dark:bg-neutral-900`}>
-						<div className=" message-user-title absolute top-0  bg-white dark:bg-neutral-900 z-20 w-full border-b border-neutral-200 p-2  dark:border-neutral-800 phone:static phone:flex phone:items-center phone:justify-between">
+					<div className={`${messageIndex >= 0 ? "flex " : "hidden"}   p-5" php relative mt-[60px] h-full w-full flex-col overflow-hidden  bg-white dark:bg-neutral-900`}>
+						<div className=" message-user-title absolute top-0  z-20 w-full border-b border-neutral-200 bg-white p-2 dark:border-neutral-800  dark:bg-neutral-900 phone:static phone:flex phone:items-center phone:justify-between">
 							<div className="message-user-cheveron left-[20px] grid  place-items-center  overPhone2:hidden">
 								<BsChevronLeft size={24} className=" hover:cursor-pointer" onClick={() => setMessageIndex(-1)} />
 							</div>
