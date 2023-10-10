@@ -233,7 +233,7 @@ export default function Page() {
 							<input
 								type="text"
 								placeholder="Enter message here..."
-								className=" h-full w-full text-sm placeholder:text-neutral-400 dark:bg-neutral-900 phone:text-[16px]"
+								className=" h-full w-full text-sm placeholder:text-neutral-400 dark:bg-neutral-900 bg-white phone:text-[16px]"
 								value={text}
 								onChange={input}
 								onBlur={(e: any) => {

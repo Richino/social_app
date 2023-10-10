@@ -66,7 +66,7 @@ export function TypeComment(props: TypeComment): JSX.Element {
 	return (
 		<>
 			<AiOutlineHeart size={24} className="text-neutral-400" />
-			<input type="text" placeholder="Add a comment..." className="h-full w-full text-sm placeholder:text-neutral-400  dark:bg-neutral-900" value={text} onChange={input} />
+			<input type="text" placeholder="Add a comment..." className="h-full w-full text-sm placeholder:text-neutral-400  dark:bg-neutral-900 bg-white" value={text} onChange={input} />
 			<button className="text-violet-500" onClick={comment}>
 				<IoPaperPlaneOutline size={24} />
 			</button>
