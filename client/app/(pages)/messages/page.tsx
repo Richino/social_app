@@ -109,6 +109,12 @@ export default function Page() {
 		};
 	}, [messages, messageIndex]);
 
+	useEffect(() => {
+		if (ref.current) {
+			ref.current.scrollIntoView({ behavior: "smooth" });
+		}
+	}, [messageIndex, messages]);
+
 	async function changeUser(position: number, id: string, unreads: number) {
 		if (unreads !== 0) {
 			let messageCopy = [...messages];
