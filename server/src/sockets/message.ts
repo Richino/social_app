@@ -5,18 +5,22 @@ import { Message } from "../models/model.js";
 import { ObjectId } from "mongodb";
 
 async function updateUserMessages(messages: any, id_1: any, id_2: any, client: any) {
-	console.log(id_1, id_2);
 	if (messages !== undefined) {
 		const containsObjectId = messages.map((objId: any) => objId.toString()).includes(id_2.toString());
 
 		if (!containsObjectId) {
+         console.log(1);
+         
+			console.log(id_1, id_2, "sender: ", id_1);
 			await client
 				.collection("users")
 				.updateOne({ _id: id_1 }, { $push: { messages: { $each: [id_2], $position: 0 } } })
 				.catch((err) => console.log(err.message));
 		} else {
+         console.log(2);
+         
 			let array = [...messages];
-			const ID = id_2;
+			const ID = id_1;
 
 			let index = array.findIndex((item) => item.toString() === ID.toString());
 			if (index !== -1) {
@@ -26,7 +30,7 @@ async function updateUserMessages(messages: any, id_1: any, id_2: any, client: a
 				await client
 					.collection("users")
 					.updateOne(
-						{ _id: id_2 },
+						{ _id: id_1 },
 						{
 							$set: {
 								messages: array,
@@ -142,7 +146,6 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 
 					await updateUserMessages(sender["messages"], res["sender"], res["recipient"], client);
 					await updateUserMessages(recepient["messages"], res["recipient"], res["sender"], client);
-
 
 					delete res["__v"];
 					delete res["createdAt"];

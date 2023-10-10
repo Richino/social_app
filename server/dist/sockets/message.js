@@ -12,25 +12,27 @@ import { Message } from "../models/model.js";
 import { ObjectId } from "mongodb";
 function updateUserMessages(messages, id_1, id_2, client) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(id_1, id_2);
         if (messages !== undefined) {
             const containsObjectId = messages.map((objId) => objId.toString()).includes(id_2.toString());
             if (!containsObjectId) {
+                console.log(1);
+                console.log(id_1, id_2, "sender: ", id_1);
                 yield client
                     .collection("users")
                     .updateOne({ _id: id_1 }, { $push: { messages: { $each: [id_2], $position: 0 } } })
                     .catch((err) => console.log(err.message));
             }
             else {
+                console.log(2);
                 let array = [...messages];
-                const ID = id_2;
+                const ID = id_1;
                 let index = array.findIndex((item) => item.toString() === ID.toString());
                 if (index !== -1) {
                     let id = array.splice(index, 1)[0];
                     array.unshift(id);
                     yield client
                         .collection("users")
-                        .updateOne({ _id: id_2 }, {
+                        .updateOne({ _id: id_1 }, {
                         $set: {
                             messages: array,
                         },

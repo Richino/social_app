@@ -12,8 +12,6 @@ export default function auth(req: any, res: Response, next: NextFunction) {
 		const token = jwt.verify(auth, secret) as JwtPayload;
 		const currentTime = Math.floor(Date.now() / 1000);
 		const expirationTime = token.exp - currentTime;
-		console.log(token);
-
 		const oneHour = 3600;
 		if (expirationTime < oneHour) {
 			const newToken = jwt.sign({ id: token["id"] }, secret, {

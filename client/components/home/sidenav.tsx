@@ -19,14 +19,14 @@ const kalam = Kalam({
 
 export default function Sidenav() {
 	const pathname = usePathname();
-	const { user, openCreatePost, users, setUsers, isOpen, setIsOpen, mobileNav, setMobileNav, settings, setSettings, setLogout, setTabletSearch } = useContext(App);
+	const { user,  setTabletSearch } = useContext(App);
 	const changeTab = () => {
 		nprogress.start();
 		setTabletSearch(false);
 	};
 
 	return (
-		<div className=" left-0  top-0 hidden  h-full min-w-min flex-col items-center justify-between gap-12 overflow-y-auto overflow-x-hidden border-r border-slate-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900 tablet:flex tablet:phone:hidden">
+		<div className=" left-0  top-0 hidden min-w-[73px] h-full  flex-col items-center justify-between gap-12 overflow-y-auto overflow-x-hidden border-r border-slate-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900 tablet:flex tablet:phone:hidden">
 			<span className={`${kalam.className}  text-2xl font-bold`}>M</span>
 			<div className="flex flex-col items-center  gap-12">
 				{pathname === "/" ? (
