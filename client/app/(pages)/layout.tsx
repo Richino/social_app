@@ -79,7 +79,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	}, []);
 
 	return (!user?.loading && user.user) || pathname === "/login" || pathname === "/register" ? (
-		<div ref={ref} className={` w-screen overflow-hidden phone:h-[100svh] phone:w-full tablet:flex tablet:phone:block`}>
+		<div ref={ref} className={` w-screen overflow-hidden overPhone2:h-[100svh] phone:w-full tablet:flex tablet:phone:block`}>
 			{pathname === "/login" || pathname === "/register" ? null : <Nav />}
 			{pathname === "/login" || pathname === "/register" ? null : <Sidenav />}
 			{createPost && <Create />}

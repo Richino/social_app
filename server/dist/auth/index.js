@@ -13,7 +13,7 @@ export default function auth(req, res, next) {
         console.log(token);
         const oneHour = 3600;
         if (expirationTime < oneHour) {
-            const newToken = jwt.sign({ id: token.id }, secret, {
+            const newToken = jwt.sign({ id: token["id"] }, secret, {
                 expiresIn: "2d",
             });
             res.cookie("auth", newToken, {

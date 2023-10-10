@@ -150,7 +150,7 @@ export default function Page() {
 	}
 	return (
 		<div
-			className={`flex h-[calc(100%-58px)] w-full flex-shrink-0 flex-col items-center gap-5  overflow-y-scroll bg-neutral-100 p-5 text-sm dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px] phone:h-[calc(100%-(60px+50px))]  tablet:w-[calc(100%-73px)] tablet:p-0  tablet:phone:block overPhone:w-full under1:h-full`}>
+			className={`flex h-[calc(100%-58px)] w-full flex-shrink-0 flex-col items-center gap-5  overflow-y-scroll bg-neutral-100 p-5 text-sm dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px] phone:h-[calc(100svh-(60px+50px))]  tablet:w-[calc(100%-73px)] tablet:p-0  tablet:phone:block overPhone:w-full under1:h-full`}>
 			<div className=" flex h-full w-full border  border-neutral-200  bg-white dark:border-neutral-800 dark:bg-neutral-900 phone:relative phone:block phone:h-[100svh] phone:w-screen phone:border-0">
 				<div
 					className={` w-[380px] overflow-y-auto  border-r border-neutral-200 dark:border-neutral-800 phone:max-w-full   overPhone:w-full   phone:${
@@ -191,7 +191,7 @@ export default function Page() {
 							Send message
 						</button>
 					</div>
-					<div className={`${messageIndex >= 0 ? "flex " : "hidden"}   p-5" php relative mt-[60px] h-full w-full flex-col overflow-hidden  bg-white dark:bg-neutral-900`}>
+					<div className={`${messageIndex >= 0 ? "flex " : "hidden"} relative  h-full w-full flex-col overflow-hidden  bg-white dark:bg-neutral-900`}>
 						<div className=" message-user-title absolute top-0  z-20 w-full border-b border-neutral-200 bg-white p-2 dark:border-neutral-800  dark:bg-neutral-900 phone:static phone:flex phone:items-center phone:justify-between">
 							<div className="message-user-cheveron left-[20px] grid  place-items-center  overPhone2:hidden">
 								<BsChevronLeft size={24} className=" hover:cursor-pointer" onClick={() => setMessageIndex(-1)} />

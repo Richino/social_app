@@ -17,7 +17,7 @@ module.exports = {
 			overPhone: { max: "601px" },
 			overPhone2: { min: "601px" },
 			under1: { max: "1000px" },
-         
+         laptop:{min: "1001px"}
 		},
 	},
 	plugins: [],
