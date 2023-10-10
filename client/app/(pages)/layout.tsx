@@ -17,6 +17,7 @@ import Error from "../../components/common/error";
 import Settings from "../../components/common/settings";
 import Logout from "../../components/common/logout";
 import TabletSearch from "../../components/common/tabletSearch";
+import Loading from "../../components/common/loading";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 	const pathname = usePathname();
@@ -78,9 +79,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 	}, []);
 
 	return (!user?.loading && user.user) || pathname === "/login" || pathname === "/register" ? (
-		<div
-			ref={ref}
-			className={` w-screen overflow-hidden phone:h-[100svh] phone:w-full tablet:flex tablet:phone:block`}>
+		<div ref={ref} className={` w-screen overflow-hidden phone:h-[100svh] phone:w-full tablet:flex tablet:phone:block`}>
 			{pathname === "/login" || pathname === "/register" ? null : <Nav />}
 			{pathname === "/login" || pathname === "/register" ? null : <Sidenav />}
 			{createPost && <Create />}
@@ -105,8 +104,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 			{tabletSearch && <TabletSearch />}
 		</div>
 	) : (
-		<div className={`relative grid h-full w-full place-items-center text-2xl dark:bg-neutral-950 phone:h-[100svh] `}>
-			<div className="circle"> </div>
-		</div>
+		<Loading />
 	);
 }
