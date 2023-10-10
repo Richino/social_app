@@ -365,12 +365,15 @@ export function Popup(props: Popup) {
 
 //main component
 export default function Post(props: IPost) {
+	const mediaQuery = window.matchMedia("(max-width: 600px)");
 	const postImageContainer2Ref = useRef<HTMLDivElement>(null);
 	const [loading, setLoading] = useState(false);
 	const [width, setWidth] = useState(window.innerWidth);
 	const [isImagePortrait, setIsImagePortrait] = useState(false);
+	const [imageType, setImageType] = useState("contain");
 	const [imageLoaded, setImageLoaded] = useState(false);
 	const [over2k, setOver2k] = useState(false);
+	const [picWidth, setPicWidth] = useState("");
 	const { setPost, user, comments, setComments, userPost, setUser, userProfile, setUserProfile, popup, setPopup, setErrorMessage, setErrorOpen } = useContext(App);
 
 	async function fetchData() {
@@ -451,6 +454,18 @@ export default function Post(props: IPost) {
 		}
 	}
 
+	function updateImageDimensions() {
+		if (mediaQuery.matches) {
+			return {
+				objectFit: "cover",
+			};
+		} else {
+			return {
+				objectFit: "contain",
+			};
+		}
+	}
+
 	useEffect(() => {
 		fetchData();
 		const img = new Image(); // Renamed to "img"
@@ -463,8 +478,12 @@ export default function Post(props: IPost) {
 			setImageLoaded(true);
 			setIsImagePortrait(imageHeight > imageWidth);
 			setOver2k(imageHeight > 2000);
+
+			imageHeight > imageWidth ? (imageHeight > 2000 ? setPicWidth("w-[474px]") : setPicWidth("w-[500px]")) : setPicWidth("w-[1100px]");
 		};
-		const handleResize = () => setWidth(window.innerWidth);
+		const handleResize = () => {
+			setWidth(window.innerWidth);
+		};
 		const handleClickOutside = (e: any) => {
 			if (e.target.id === "post-modal") {
 				setPost(false);
@@ -515,19 +534,20 @@ export default function Post(props: IPost) {
 					</span>
 					<BsThreeDots size={16} className="hover:cursor-pointer" onClick={() => setPopup(true)} />
 				</div>
-				{imageLoaded && (
+				{imageLoaded ? (
 					<div
 						ref={postImageContainer2Ref}
 						id="post-image-container-2"
-						className="post-image-container flex  h-full w-full items-center  justify-center  transition-width phone:bg-white p-5 phone:dark:bg-black phone:p-0">
+						className={`post-image-container flex  h-[800px] ${picWidth} phone:w-full  phone:min-h-[calc(100svh-148px)] phone:max-h-[calc(100svh-148px)] relative items-center justify-center  p-5 transition-width phone:bg-white phone:p-0 phone:dark:bg-black`}>
 						<ImageTag
+							className="object-contain phone:cover"
 							priority
 							id="post-image"
 							src={props.post}
 							alt="post"
-							height={500}
-                     
-							width={isImagePortrait ? (over2k ? 474 : 500) : 1100}
+							//height={500}
+							fill
+							//width={isImagePortrait ? (over2k ? 474 : 500) : 1100}
 							quality={100}
 							onError={() => {
 								setErrorMessage("Image failed to load (dev too broke to upgrade storage)");
@@ -536,7 +556,11 @@ export default function Post(props: IPost) {
 							}}
 						/>
 					</div>
-				)}
+				): (
+               <div className={`phone:min-h-[calc(100svh-148px)] phone:max-h-[calc(100svh-148px)] dark:bg-black phone:w-full grid place-items-center text-2xl` }>
+                  Loading...
+               </div>
+            )}
 			</div>
 			<div className="sticky top-[83px] z-50 hidden w-[400px]  max-w-[400px] flex-col  justify-between gap-4 border-b border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900 phone:flex phone:w-full phone:max-w-none">
 				<div className="flex justify-between ">

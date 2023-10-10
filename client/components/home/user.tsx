@@ -10,7 +10,7 @@ export default function User(props: UserProps) {
 				<span
 					className={`${
 						props.type == "message"
-							? "w-[260px] under1:w-full"
+							? "w-[260px]  max-w-[150px] text-ellipsis overflow-hidden z-50"
 							: props.type === "create-post"
 							? "w-[320px] phone:w-[120px]"
 							: props.type === "list"
@@ -24,8 +24,8 @@ export default function User(props: UserProps) {
 							: props.type === "post-feed"
 							? "w-[300px]"
 							: "w-full"
-					}   truncate dark:text-neutral-200`}>
-					<b>{props.fullname}</b>
+					}   truncate dark:text-neutral-200 font-semibold`}>
+					{props.fullname}
 				</span>
 				<span className=" line-clamp-1  w-full truncate text-neutral-400 dark:text-neutral-200">{props.usernameOrText}</span>
 			</div>

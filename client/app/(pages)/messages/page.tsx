@@ -159,7 +159,7 @@ export default function Page() {
 			className={`flex h-[calc(100%-58px)] w-full flex-shrink-0 flex-col items-center gap-5  overflow-y-scroll bg-neutral-100 p-5 text-sm dark:bg-neutral-950 phone:fixed phone:top-[52px] phone:mb-[60px] phone:h-[calc(100svh-(60px+50px))]  tablet:w-[calc(100%-60px)] tablet:p-0  tablet:phone:block overPhone:w-full under1:h-full`}>
 			<div className=" flex h-full w-full border  border-neutral-200  bg-white dark:border-neutral-800 dark:bg-neutral-900 phone:relative phone:block phone:h-[100svh] phone:w-screen phone:border-0">
 				<div
-					className={` w-[380px] tablet:w-[225px] overflow-y-auto  border-r border-neutral-200 dark:border-neutral-800 phone:max-w-full   overPhone:w-full   phone:${
+					className={` w-[380px] overflow-x-hidden  overflow-y-auto  border-r border-neutral-200 dark:border-neutral-800 phone:max-w-full   overPhone:w-full   phone:${
 						messageIndex !== -1 && "hidden"
 					}`}>
 					<div className=" sticky top-0  flex min-h-[59px] items-center justify-between border-b border-neutral-200 p-2  px-5 dark:border-neutral-800  phone:mb-5 phone:min-h-[83px]">
@@ -173,7 +173,7 @@ export default function Page() {
 						return (
 							<div
 								key={position}
-								className={`p-5 py-2 hover:cursor-pointer hover:bg-neutral-200 dark:border-neutral-800 dark:hover:bg-neutral-800 ${
+								className={`p-5 py-2 hover:cursor-pointer hover:bg-neutral-200 dark:border-neutral-800 dark:hover:bg-neutral-800 min-w-[260px] ${
 									position == messageIndex && "bg-neutral-200 dark:bg-neutral-800"
 								} flex shrink-0 items-center`}
 								onClick={() => changeUser(position, key._id, unread(key))}>
@@ -212,7 +212,7 @@ export default function Page() {
 						</div>
 						<div
 							id="chat-container"
-							className=" flex h-full flex-col-reverse gap-5 overflow-y-scroll p-5 phone:mb-0 phone:mt-0 phone:h-[calc(100svh-240px)] phone:dark:bg-neutral-950  ">
+							className=" flex  flex-col-reverse gap-5 overflow-y-scroll p-5 mt-[60px] phone:mb-0 phone:mt-0 phone:h-[calc(100svh-240px)] phone:dark:bg-neutral-950  ">
 							<div className="w-0 h-0" ref={ref}></div>
 							{messages[messageIndex]?.message.map((key: any, position: number) => {
 								return (
@@ -229,7 +229,7 @@ export default function Page() {
 								);
 							})}
 						</div>
-						<div className=" bottom-0 z-50 flex  w-full  items-center justify-between gap-2 border-t border-neutral-200 p-5 dark:border-neutral-800 phone:border-b-0">
+						<div className=" bottom-0 z-50 flex max-h-[65px] w-full  items-center justify-between gap-2 border-t border-neutral-200 p-5 dark:border-neutral-800 phone:border-b-0">
 							<input
 								type="text"
 								placeholder="Enter message here..."
