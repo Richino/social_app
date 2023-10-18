@@ -500,7 +500,7 @@ export default function Post(props: IPost) {
 	return (
 		<div
 			id="post-modal"
-			className="fixed left-0 top-0 z-[100] flex h-full w-full bg-black/80 phone:h-[100svh] phone:flex-col phone:overflow-y-auto phone:bg-neutral-100"
+			className="fixed left-0 top-0 z-[100] flex h-full w-full bg-black/80 phone:h-[100svh] phone:flex-col phone:overflow-y-auto phone:bg-neutral-100 dark:phone:bg-neutral-900"
 			onClick={hidePost}>
 			<div className="close fixed left-[20px] top-[20px] z-50 rounded-full bg-white/25  p-2 hover:cursor-pointer">
 				<AiOutlineClose color="white" size={20} className="" onClick={() => setPost(false)} />
