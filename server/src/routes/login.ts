@@ -33,6 +33,8 @@ router.post("/", async (req: Request, res: Response) => {
          domain: ".railway.app"
 		});
 
+      //fixed
+
 		res.status(200).json(token);
 	} catch (error) {
 		(await session).abortTransaction();
