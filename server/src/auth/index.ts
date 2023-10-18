@@ -25,6 +25,7 @@ export default function auth(req: any, res: Response, next: NextFunction) {
 				secure: true,
 				sameSite: "none",
 				maxAge: 2 * 24 * 60 * 60 * 1000,
+            domain: ".momentswelive.app"
 			});
 
 			req.user = jwt.verify(newToken, secret);
