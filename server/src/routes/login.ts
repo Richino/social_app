@@ -28,7 +28,7 @@ router.post("/", async (req: Request, res: Response) => {
 		res.cookie("auth", token, {
 			httpOnly: true,
 			secure: true,
-			sameSite: "none",
+			sameSite: "lax",
 			maxAge: 2 * 24 * 60 * 60 * 1000,
          domain: ".up.railway.app"
 		});
