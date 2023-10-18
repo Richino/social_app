@@ -4,7 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { BsChevronLeft } from "react-icons/bs";
 export default function Settings() {
-	const { settings, setSettings,setLogout } = useContext(App);
+	const { settings, setSettings, setLogout } = useContext(App);
 	const ref = useRef<HTMLDivElement>(null);
 
 	const [index, setIndex] = useState(0);
@@ -58,13 +58,6 @@ export default function Settings() {
 			});
 	}
 
-	function changeTab(tab: number) {
-		setMessage("");
-		setSuccess(false);
-		setError(false);
-		setIndex(tab);
-	}
-
 	function closeModal(e: MouseEvent<HTMLDivElement>) {
 		if (ref.current && ref.current === (e.target as Node)) {
 			setSettings({ ...settings, isSettingOpen: false });
@@ -99,9 +92,13 @@ export default function Settings() {
 					}}>
 					Apperance
 				</button>
-				<button className="border-b border-neutral-200 p-5 text-rose-500 dark:border-neutral-800" onClick={() =>{
-                    setLogout(true);
-                }}>Logout</button>
+				<button
+					className="border-b border-neutral-200 p-5 text-rose-500 dark:border-neutral-800"
+					onClick={() => {
+						setLogout(true);
+					}}>
+					Logout
+				</button>
 				<button className=" p-5" onClick={closeModal2}>
 					Close
 				</button>
@@ -109,9 +106,9 @@ export default function Settings() {
 			{index > 0 && (
 				<div className={`fixed top-0 h-full w-full`}>
 					{index == 1 ? (
-						<div className="flex h-full w-full flex-col items-center justify-center  gap-2 bg-white dark:bg-neutral-900 p-5 pg">
+						<div className="pg flex h-full w-full flex-col items-center  justify-center gap-2 bg-white p-5 dark:bg-neutral-900">
 							<BsChevronLeft size={24} className=" absolute left-[20px] top-[20px] hover:cursor-pointer" onClick={() => setIndex(0)} />
-							<div className="flex w-[280px] items-center justify-between phone:w-full gap-10">
+							<div className="flex w-[280px] items-center justify-between gap-10 phone:w-full">
 								<span className="phone:min-w-[60px]">Fullname</span>
 								<input
 									type="text"
@@ -121,7 +118,7 @@ export default function Settings() {
 									onChange={input}
 								/>
 							</div>
-							<div className="flex w-[280px] items-center justify-between phone:w-full gap-10">
+							<div className="flex w-[280px] items-center justify-between gap-10 phone:w-full">
 								<span className="phone:min-w-[60px]">Username</span>
 								<input
 									type="text"
@@ -131,7 +128,7 @@ export default function Settings() {
 									onChange={input}
 								/>
 							</div>
-							<div className="flex w-[280px] items-center justify-between phone:w-full gap-10">
+							<div className="flex w-[280px] items-center justify-between gap-10 phone:w-full">
 								<span className="phone:min-w-[60px]">Email</span>
 								<input
 									type="text"
@@ -141,7 +138,7 @@ export default function Settings() {
 									onChange={input}
 								/>
 							</div>
-							<div className="flex w-[280px] items-center justify-between phone:w-full gap-10">
+							<div className="flex w-[280px] items-center justify-between gap-10 phone:w-full">
 								<span className="phone:min-w-[60px]">Bio</span>
 								<textarea
 									maxLength={150}

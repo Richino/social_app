@@ -1,5 +1,4 @@
 "use client";
-import { MdOutlineExplore, MdExplore } from "react-icons/md";
 import { VscDiffAdded } from "react-icons/vsc";
 import { AiOutlineHome, AiFillHome, AiOutlineMessage, AiOutlineHeart, AiFillMessage, AiFillHeart } from "react-icons/ai";
 import { RiSettings3Line, RiSettings3Fill } from "react-icons/ri";

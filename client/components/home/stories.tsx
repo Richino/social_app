@@ -1,6 +1,5 @@
 "use client";
-import Avatar from "../common/avatar";
-import { useState } from "react";
+
 
 export default function Stories() {
 	return (

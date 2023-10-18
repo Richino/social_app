@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
 import Header from "./header";
-import User from "./user";
+
 
 export default function Suggestion() {
 	return (

@@ -2,7 +2,7 @@
 import Header from "./header";
 import Search from "./search";
 import { App } from "../../app/context";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect} from "react";
 import User from "./user";
 import axios from "axios";
 import Link from "next/link";

@@ -3,7 +3,7 @@ import Avatar from "../common/avatar";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import Search from "./search";
 import Link from "next/link";
-import { usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 import { AiFillHeart, AiOutlineHeart, AiOutlineLogout } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import nprogress from "nprogress";
@@ -36,6 +36,12 @@ export default function Nav() {
 			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	}, [navbarRef]);
+
+	const searchUser = (user: string) => {
+		if (user !== pathname) nprogress.start();
+		setIsOpen(false);
+		setUsers([]);
+	};
 	return (
 		<>
 			<div className="sticky left-0 top-0 z-40 flex h-full max-h-[58px] min-h-[58px] justify-center  gap-4 border-b border-neutral-200 bg-white py-2   dark:border-neutral-800 dark:bg-neutral-900 tablet:hidden">
@@ -58,14 +64,7 @@ export default function Nav() {
 								className="z-[100] ml-[-3.5px] mt-[16px] h-[400px] w-[400px] rounded border bg-white shadow-xl dark:border-neutral-800 dark:bg-neutral-900">
 								{users.map((key: any, value: number) => {
 									return (
-										<Link
-											key={value}
-											href={`/${key.username}`}
-											onClick={() => {
-												if (`/${key.username}` !== pathname) nprogress.start();
-												setIsOpen(false);
-												setUsers([]);
-											}}>
+										<Link key={value} href={`/${key.username}`} onClick={() => searchUser(`/${key.username}`)}>
 											<div className="p-5 hover:bg-neutral-100 dark:hover:bg-neutral-800">
 												<User fullname={key.fullname} avatar={key.avatar} usernameOrText={key.username} type="user-search" />
 											</div>

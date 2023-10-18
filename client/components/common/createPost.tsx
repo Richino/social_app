@@ -18,6 +18,42 @@ export default function Create() {
 		headers: { "Content-Type": "multipart/form-data" },
 	});
 
+	const uploadPhoto = async (e: any) => {
+		e.preventDefault();
+		const formData = new FormData();
+		formData.append("image", image);
+		formData.append("caption", value);
+		await instance
+			.post("/image/post/upload", formData)
+			.then((res) => {
+				if (res.data.author === user.user?._id) {
+					setUserProfile({
+						...userProfile,
+						post: [res.data, ...(userProfile.post ?? [])],
+					});
+				}
+				openCreatePost(false);
+			})
+			.catch((err) => {
+				setErrorMessage(err.response.data);
+				setErrorOpen(true);
+			});
+	};
+
+	const generatePhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = (event) => {
+				const base64DataUrl = event.target?.result;
+				setUrl(base64DataUrl);
+				setImage(file);
+			};
+			reader.readAsDataURL(file);
+		}
+		setIndex(2);
+	};
+
 	return (
 		<div
 			id="create-post"
@@ -41,30 +77,7 @@ export default function Create() {
 						) : index === 2 ? (
 							<button onClick={() => setIndex(3)}>Next</button>
 						) : (
-							<button
-								className="text-violet-500"
-								onClick={async (e) => {
-									e.preventDefault();
-									const formData = new FormData();
-									formData.append("image", image);
-									formData.append("caption", value);
-									await instance
-										.post("/image/post/upload", formData)
-										.then((res) => {
-											if (res.data.author === user.user?._id) {
-												console.log("here");
-												setUserProfile({
-													...userProfile,
-													post: [res.data, ...(userProfile.post ?? [])],
-												});
-											}
-											openCreatePost(false);
-										})
-										.catch((err) => {
-											setErrorMessage(err.response.data);
-											setErrorOpen(true);
-										});
-								}}>
+							<button className="text-violet-500" onClick={uploadPhoto}>
 								<b>Post</b>
 							</button>
 						)}
@@ -75,26 +88,7 @@ export default function Create() {
 							<button className="rounded-md bg-violet-500 p-5 py-2 text-white" onClick={() => document.getElementById("file-input")?.click()}>
 								Select from computer
 							</button>
-							<input
-								id="file-input"
-								type="file"
-								name="post"
-								accept="image/png, image/jpeg"
-								className="hidden"
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-									const file = e.target.files?.[0];
-									if (file) {
-										const reader = new FileReader();
-										reader.onload = (event) => {
-											const base64DataUrl = event.target?.result;
-											setUrl(base64DataUrl);
-											setImage(file);
-										};
-										reader.readAsDataURL(file);
-									}
-									setIndex(2);
-								}}
-							/>
+							<input id="file-input" type="file" name="post" accept="image/png, image/jpeg" className="hidden" onChange={generatePhoto} />
 						</div>
 					</div>
 					<div className={`h-[calc(100%-49px)] w-full place-items-center ${index >= 2 ? "flex" : "hidden"} relative phone:h-full`}>

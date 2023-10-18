@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext,  useEffect, useRef } from "react";
 import { AiFillHome, AiOutlineHome, AiFillMessage, AiOutlineMessage } from "react-icons/ai";
 import { MdExplore, MdOutlineExplore } from "react-icons/md";
 import { VscDiffAdded } from "react-icons/vsc";

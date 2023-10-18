@@ -10,7 +10,6 @@ import ImageTag from "next/image";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import axios from "axios";
 import Link from "next/link";
-import { set } from "nprogress";
 const instance = axios.create({
 	baseURL: process.env.NEXT_PUBLIC_URL,
 	withCredentials: true,
@@ -66,7 +65,13 @@ export function TypeComment(props: TypeComment): JSX.Element {
 	return (
 		<>
 			<AiOutlineHeart size={24} className="text-neutral-400" />
-			<input type="text" placeholder="Add a comment..." className="h-full w-full text-sm placeholder:text-neutral-400  dark:bg-neutral-900 bg-white" value={text} onChange={input} />
+			<input
+				type="text"
+				placeholder="Add a comment..."
+				className="h-full w-full bg-white text-sm  placeholder:text-neutral-400 dark:bg-neutral-900"
+				value={text}
+				onChange={input}
+			/>
 			<button className="text-violet-500" onClick={comment}>
 				<IoPaperPlaneOutline size={24} />
 			</button>
@@ -441,7 +446,7 @@ export default function Post(props: IPost) {
 				});
 				setPopup(false);
 			})
-			.catch((err) => {});
+			
 	}
 
 	function hidePost(e: any) {
@@ -450,19 +455,6 @@ export default function Post(props: IPost) {
 			setComments([]);
 		}
 	}
-
-	function updateImageDimensions() {
-		if (mediaQuery.matches) {
-			return {
-				objectFit: "cover",
-			};
-		} else {
-			return {
-				objectFit: "contain",
-			};
-		}
-	}
-
 	useEffect(() => {
 		fetchData();
 		const img = new Image();
@@ -531,23 +523,14 @@ export default function Post(props: IPost) {
 					<div
 						ref={postImageContainer2Ref}
 						id="post-image-container-2"
-						className={`post-image-container flex  h-[800px] ${picWidth} phone:w-full  phone:min-h-[calc(100svh-148px)] phone:max-h-[calc(100svh-148px)] relative items-center justify-center  p-5 transition-width phone:bg-white phone:p-0 phone:dark:bg-black`}>
-						<ImageTag
-							className="object-contain phone:cover"
-							priority
-							id="post-image"
-							src={props.post}
-							alt="post"
-							height={800}
-                     width={picWidth}
-                     sizes="(max-width:1100px) 100vw"
-						/>
+						className={`post-image-container flex  h-[800px] ${picWidth} relative  items-center justify-center p-5 transition-width phone:max-h-[calc(100svh-148px)]  phone:min-h-[calc(100svh-148px)] phone:w-full phone:bg-white phone:p-0 phone:dark:bg-black`}>
+						<ImageTag style={{ objectFit: "contain" }} priority id="post-image" src={props.post} alt="post" fill sizes="(max-width:1100px) 100vw" />
 					</div>
-				): (
-               <div className={`phone:min-h-[calc(100svh-148px)] phone:max-h-[calc(100svh-148px)] phone:dark:bg-black phone:w-full grid place-items-center text-2xl` }>
-                  Loading...
-               </div>
-            )}
+				) : (
+					<div className={`grid place-items-center text-2xl phone:max-h-[calc(100svh-148px)] phone:min-h-[calc(100svh-148px)] phone:w-full phone:dark:bg-black`}>
+						Loading...
+					</div>
+				)}
 			</div>
 			<div className="sticky top-[83px] z-50 hidden w-[400px]  max-w-[400px] flex-col  justify-between gap-4 border-b border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900 phone:flex phone:w-full phone:max-w-none">
 				<div className="flex justify-between ">

@@ -3,7 +3,6 @@ import { ThemeProvider } from "../components/themes";
 import "../stylesheet/globals.css";
 import { App, useMyContext } from "./context";
 import { Roboto as Inter } from "@next/font/google";
-import Head from "next/head";
 
 const inter = Inter({
 	subsets: ["latin"],

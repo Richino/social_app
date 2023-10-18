@@ -4,7 +4,6 @@ import Gallery from "../../../components/common/gallery";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Head from "next/head";
 
 export default function Page() {
 	const router = useRouter();
@@ -37,7 +36,7 @@ export default function Page() {
 		setLoading(true);
 		await instance
 			.post("/login", data)
-			.then((res) => {
+			.then(() => {
 				setError(false);
 				setMessage("...");
 				setLoading(true);

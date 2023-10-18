@@ -11,6 +11,14 @@ import Search from "../home/search";
 export default function TabletSearch() {
 	const pathname = usePathname();
 	const { users, setUsers, setIsOpen, setMobileNav, setTabletSearch } = useContext(App);
+
+	const searchUser = (user: string) => {
+		if (user !== pathname) nprogress.start();
+		setIsOpen(false);
+		setMobileNav(false);
+		setTabletSearch(false);
+		setUsers([]);
+	};
 	return (
 		<div className="fixed left-[70px] top-0 z-[9999] h-screen w-[calc(100%-70px)] space-y-5 border-l border-neutral-800 bg-neutral-900 phone:hidden ">
 			<div className="flex items-center gap-5 p-5">
@@ -24,16 +32,7 @@ export default function TabletSearch() {
 					<div>
 						{users.map((key: any, value: number) => {
 							return (
-								<Link
-									key={value}
-									href={`/${key.username}`}
-									onClick={() => {
-										if (`/${key.username}` !== pathname) nprogress.start();
-										setIsOpen(false);
-										setMobileNav(false);
-										setTabletSearch(false);
-										setUsers([]);
-									}}>
+								<Link key={value} href={`/${key.username}`} onClick={() => searchUser(`/${key.username}`)}>
 									<div className="p-5 hover:bg-neutral-100 dark:hover:bg-neutral-800">
 										<User fullname={key.fullname} avatar={key.avatar} usernameOrText={key.username} type="search-mobile" />
 									</div>
