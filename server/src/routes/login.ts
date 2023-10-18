@@ -30,6 +30,7 @@ router.post("/", async (req: Request, res: Response) => {
 			secure: true,
 			sameSite: "none",
 			maxAge: 2 * 24 * 60 * 60 * 1000,
+         domain: ".up.railway.app"
 		});
 
 		res.status(200).json(token);
