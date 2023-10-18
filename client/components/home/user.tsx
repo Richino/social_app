@@ -1,8 +1,6 @@
 import Avatar from "../common/avatar";
 import { UserProps } from "../../app/(interface)/user";
 export default function User(props: UserProps) {
-   console.log(props.type );
-   
 	return (
 		<div className="flex w-full gap-2 overflow-hidden">
 			<Avatar story={false} height={42} width={42} image={props.avatar} />

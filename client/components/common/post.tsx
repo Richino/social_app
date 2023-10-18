@@ -370,7 +370,7 @@ export default function Post(props: IPost) {
 	const [loading, setLoading] = useState(false);
 	const [width, setWidth] = useState(window.innerWidth);
 	const [imageLoaded, setImageLoaded] = useState(false);
-	const [picWidth, setPicWidth] = useState("");
+	const [picWidth, setPicWidth] = useState(0);
 	const { setPost, user, comments, setComments, userPost, setUser, userProfile, setUserProfile, popup, setPopup, setErrorMessage, setErrorOpen } = useContext(App);
 
 	async function fetchData() {
@@ -471,9 +471,8 @@ export default function Post(props: IPost) {
 		img.onload = () => {
 			const imageWidth = img.width;
 			const imageHeight = img.height;
-			console.log(imageWidth, imageHeight);
 			setImageLoaded(true);
-			imageHeight > imageWidth ? (imageHeight > 2000 ? setPicWidth("w-[474px]") : setPicWidth("w-[500px]")) : setPicWidth("w-[1100px]");
+			imageHeight > imageWidth ? (imageHeight > 2000 ? setPicWidth(450) : setPicWidth(500)) : setPicWidth(1000);
 		};
 		const handleResize = () => {
 			setWidth(window.innerWidth);
@@ -539,17 +538,13 @@ export default function Post(props: IPost) {
 							id="post-image"
 							src={props.post}
 							alt="post"
-							fill
-							quality={100}
-							onError={() => {
-								setErrorMessage("Image failed to load (dev too broke to upgrade storage)");
-								setErrorOpen(true);
-								setPost(false);
-							}}
+							height={800}
+                     width={picWidth}
+                     sizes="(max-width:1100px) 100vw"
 						/>
 					</div>
 				): (
-               <div className={`phone:min-h-[calc(100svh-148px)] phone:max-h-[calc(100svh-148px)] dark:bg-black phone:w-full grid place-items-center text-2xl` }>
+               <div className={`phone:min-h-[calc(100svh-148px)] phone:max-h-[calc(100svh-148px)] phone:dark:bg-black phone:w-full grid place-items-center text-2xl` }>
                   Loading...
                </div>
             )}

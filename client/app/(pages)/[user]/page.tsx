@@ -254,6 +254,7 @@ export default function Page({ params }: any) {
 												}}
 												fill
 												priority={true}
+                                    sizes="(max-width:261.34px) 100vw, 261.34px"
 											/>
 										</div>
 									);
@@ -280,7 +281,7 @@ export default function Page({ params }: any) {
 										alt="post"
 										className={`h-full w-full object-cover`}
 										fill
-										sizes="(max-width: 261.34px) 100vw, 261.34px"
+										sizes="(max-width:261.34px) 100vw, 261.34px"
 										priority={true}
 									/>
 								</div>

@@ -4,6 +4,7 @@ const secret = process.env["SECRET"];
 //possible to has the cookie
 export default function auth(req, res, next) {
     const auth = req.cookies.auth;
+    console.log(auth, " in auth");
     if (!auth)
         return res.status(401).send("Unauthorized");
     try {
@@ -20,6 +21,7 @@ export default function auth(req, res, next) {
                 secure: true,
                 sameSite: "none",
                 maxAge: 2 * 24 * 60 * 60 * 1000,
+                domain: ".momentswelive.app"
             });
             req.user = jwt.verify(newToken, secret);
         }
