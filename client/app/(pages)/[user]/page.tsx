@@ -57,8 +57,8 @@ export default function Page({ params }: any) {
 					},
 				});
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
+				return
 			});
 	}
 
@@ -79,8 +79,8 @@ export default function Page({ params }: any) {
 					},
 				});
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
+				return
 			});
 	}
 

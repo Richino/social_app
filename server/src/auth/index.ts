@@ -5,8 +5,6 @@ const secret = process.env["SECRET"];
 
 export default function auth(req: any, res: Response, next: NextFunction) {
 	const auth = req.cookies.auth;
-   console.log(auth, " in auth");
-   
 	if (!auth) return res.status(401).send("Unauthorized");
 	try {
 		const token = jwt.verify(auth, secret) as JwtPayload;

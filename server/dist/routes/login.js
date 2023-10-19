@@ -36,7 +36,6 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const token = jwt.sign({ id: user._id }, process.env["SECRET"], {
             expiresIn: "2d",
         });
-        console.log(1);
         res.cookie("auth", token, {
             httpOnly: true,
             secure: true,
@@ -49,7 +48,6 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         (yield session).abortTransaction();
-        console.log(error);
     }
     finally {
         (yield session).endSession();

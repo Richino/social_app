@@ -46,7 +46,7 @@ function Messages(io) {
         const sessionId = socket.id;
         users.set(sessionId, userId);
         socket.on("disconnect", () => {
-            users.forEach((key, value) => {
+            users.forEach((_, value) => {
                 if (value === socket.id) {
                     users.delete(socket.id);
                 }

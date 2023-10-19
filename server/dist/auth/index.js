@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 const secret = process.env["SECRET"];
 export default function auth(req, res, next) {
     const auth = req.cookies.auth;
-    console.log(auth, " in auth");
     if (!auth)
         return res.status(401).send("Unauthorized");
     try {

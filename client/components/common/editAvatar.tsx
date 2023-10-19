@@ -38,7 +38,6 @@ export default function EditAvatar() {
 
 	const uploadProfileImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files && e.target.files.length > 0) {
-			console.log(URL.createObjectURL(e.target.files?.[0]));
 			const formData = new FormData();
 			formData.append("image", e.target.files?.[0]);
 			await instance

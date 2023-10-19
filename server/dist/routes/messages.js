@@ -173,7 +173,6 @@ router.post("/read", auth, (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
     catch (error) {
         (yield session).abortTransaction();
-        console.log(error);
     }
     finally {
         (yield session).endSession();

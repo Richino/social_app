@@ -76,8 +76,7 @@ export default function Page() {
 					});
 					await instance
 						.post(`/messages/read`, { user: messageCopy[userIndex]._id })
-						.then((res) => console.log("true"))
-						.catch((error) => console.error("Error marking message as read:", error));
+						
 				}
 
 				userIndex = messageCopy.findIndex((key: any) => key._id === data.id);

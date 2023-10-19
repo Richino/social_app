@@ -54,8 +54,8 @@ export function TypeComment(props: TypeComment): JSX.Element {
 				setComments([res.data[0], ...comments]);
 				setText("");
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
+				
 				return;
 			});
 	}
@@ -98,9 +98,7 @@ export function Comment(props: Comments): JSX.Element {
 				newComments[props.index].comments_info.likes.push(user.user?._id ?? "");
 				setComments(newComments);
 			})
-			.catch((err) => {
-				console.log(err);
-			});
+			
 	}
 
 	function openList(type: string) {
@@ -122,8 +120,8 @@ export function Comment(props: Comments): JSX.Element {
 				newComments[props.index].comments_info.likes.splice(index, 1);
 				setComments(newComments);
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
+				return
 			});
 	}
 	return (
@@ -203,8 +201,8 @@ export function Popup(props: Popup) {
 				});
 				setPopup(false);
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
+				return
 			});
 	}
 
@@ -231,8 +229,8 @@ export function Popup(props: Popup) {
 				});
 				setPopup(false);
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
+				return
 			});
 	}
 
@@ -240,7 +238,6 @@ export function Popup(props: Popup) {
 		(e.target as HTMLDivElement).id === "popup" && setPopup(false);
 	}
 	async function changeCaption() {
-		console.log(value);
 		await instance
 			.post(`/main_user/caption/update`, { postId: props.postId, text: value })
 			.then(() => {
@@ -265,8 +262,8 @@ export function Popup(props: Popup) {
 				setValue("");
 				setPopup(false);
 			})
-			.catch((err) => {
-				console.log(err.message);
+			.catch(() => {
+				return
 			});
 	}
 
@@ -288,8 +285,8 @@ export function Popup(props: Popup) {
 				setComments([]);
 				setUserPost({});
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
+				return
 			});
 	}
 	return (
@@ -385,8 +382,8 @@ export default function Post(props: IPost) {
 				setLoading(false);
 				setComments(res.data);
 			})
-			.catch((err) => {
-				console.log(err.message);
+			.catch(() => {
+				return
 			});
 	}
 
@@ -418,8 +415,8 @@ export default function Post(props: IPost) {
 				});
 				setPopup(false);
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch(() => {
+				return
 			});
 	}
 
@@ -461,7 +458,6 @@ export default function Post(props: IPost) {
 		img.onload = () => {
 			const imageWidth = img.width;
 			const imageHeight = img.height;
-			console.log(imageHeight, imageWidth);
 
 			setImageLoaded(true);
 			imageHeight > imageWidth

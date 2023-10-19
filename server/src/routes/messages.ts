@@ -178,7 +178,6 @@ router.post("/read", auth, async (req: any, res: Response) => {
 		return res.status(200).json(true);
 	} catch (error) {
 		(await session).abortTransaction();
-		console.log(error);
 	} finally {
 		(await session).endSession();
 	}

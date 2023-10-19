@@ -29,7 +29,6 @@ export default function Page() {
 	}
 
 	async function login(e: any) {
-		console.log("Here");
 		e.preventDefault();
 		setError(false);
 		setMessage("message");

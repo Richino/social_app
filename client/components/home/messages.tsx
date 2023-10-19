@@ -10,7 +10,7 @@ import "nprogress/nprogress.css";
 import nprogress from "nprogress";
 
 export default function Messages() {
-	const { messages, messageIndex, setMessages, user, setMessageIndex, setMessageId } = useContext(App);
+	const { messages, messageIndex, setMessages, user,  setMessageId } = useContext(App);
 	const instance = axios.create({
 		baseURL: process.env.NEXT_PUBLIC_URL,
 		withCredentials: true,
@@ -32,7 +32,7 @@ export default function Messages() {
 					key.readBy.push(user.user?._id);
 				}
 			});
-			await instance.post(`/messages/read`, { user: messageCopy[position]._id }).then((res) => console.log("true"));
+			await instance.post(`/messages/read`, { user: messageCopy[position]._id })
 			setMessages(messageCopy);
 		}
 		setMessageId(id);

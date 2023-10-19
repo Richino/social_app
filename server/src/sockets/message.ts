@@ -44,7 +44,7 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 		users.set(sessionId, userId);
 
 		socket.on("disconnect", () => {
-			users.forEach((key, value) => {
+			users.forEach((_, value) => {
 				if (value === socket.id) {
 					users.delete(socket.id);
 				}

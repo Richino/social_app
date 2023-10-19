@@ -143,7 +143,6 @@ router.post("/like-comment", auth, (req, res) => __awaiter(void 0, void 0, void 
     }
     catch (error) {
         (yield session).abortTransaction();
-        console.log(error); //
     }
     finally {
         (yield session).endSession();
@@ -151,7 +150,6 @@ router.post("/like-comment", auth, (req, res) => __awaiter(void 0, void 0, void 
 }));
 router.post("/caption/update", auth, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { postId, text } = req.body;
-    console.log({ postId, text });
     const client = yield connectDB();
     const session = client.startSession();
     (yield session).startTransaction();
@@ -161,7 +159,6 @@ router.post("/caption/update", auth, (req, res) => __awaiter(void 0, void 0, voi
     }
     catch (error) {
         (yield session).abortTransaction();
-        console.log(error); //
     }
     finally {
         (yield session).endSession();
@@ -226,7 +223,6 @@ router.post("/update/user/:type", auth, (req, res) => __awaiter(void 0, void 0, 
     }
     catch (error) {
         (yield session).abortTransaction();
-        console.log(error); //
     }
     finally {
         (yield session).endSession();
@@ -295,7 +291,6 @@ router.delete("/post/delete", auth, (req, res) => __awaiter(void 0, void 0, void
     }
     catch (error) {
         (yield session).abortTransaction();
-        console.log(error); //
     }
     finally {
         (yield session).endSession();
@@ -370,7 +365,6 @@ router.post("/comment/:id", auth, (req, res) => __awaiter(void 0, void 0, void 0
     }
     catch (error) {
         (yield session).abortTransaction();
-        console.log(error);
     }
     finally {
         (yield session).endSession();

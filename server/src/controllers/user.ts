@@ -129,7 +129,7 @@ router.post("/like-comment", auth, async (req: any, res: Response) => {
 		}
 	} catch (error) {
 		(await session).abortTransaction();
-		console.log(error); //
+		
 	} finally {
 		(await session).endSession();
 	}
@@ -137,7 +137,6 @@ router.post("/like-comment", auth, async (req: any, res: Response) => {
 
 router.post("/caption/update", auth, async (req: any, res: Response) => {
 	const { postId, text } = req.body;
-	console.log({ postId, text });
 	const client = await connectDB();
 	const session = client.startSession();
 	(await session).startTransaction();
@@ -146,7 +145,7 @@ router.post("/caption/update", auth, async (req: any, res: Response) => {
 		return res.status(200).json(true);
 	} catch (error) {
 		(await session).abortTransaction();
-		console.log(error); //
+
 	} finally {
 		(await session).endSession();
 	}
@@ -202,7 +201,6 @@ router.post("/update/user/:type", auth, async (req: any, res: Response) => {
 		return res.status(200).json(user);
 	} catch (error) {
 		(await session).abortTransaction();
-		console.log(error); //
 	} finally {
 		(await session).endSession();
 	}
@@ -268,7 +266,6 @@ router.delete("/post/delete", auth, async (req: any, res: Response) => {
 		return res.status(200).json(true);
 	} catch (error) {
 		(await session).abortTransaction();
-		console.log(error); //
 	} finally {
 		(await session).endSession();
 	}
@@ -343,7 +340,6 @@ router.post("/comment/:id", auth, async (req: any, res: Response) => {
 		});
 	} catch (error) {
 		(await session).abortTransaction();
-		console.log(error);
 	} finally {
 		(await session).endSession();
 	}
