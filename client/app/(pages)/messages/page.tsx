@@ -212,7 +212,7 @@ export default function Page() {
 						</div>
 						<div
 							id="chat-container"
-							className=" flex  flex-col-reverse gap-5 overflow-y-scroll p-5 mt-[60px] phone:mb-0 phone:mt-0 phone:h-[calc(100svh-240px)] phone:dark:bg-neutral-950  ">
+							className=" flex  flex-col-reverse gap-5 overflow-y-scroll p-5 mt-[60px] phone:mb-0 phone:mt-0 phone:h-[calc(100svh-240px)] phone:dark:bg-neutral-950  h-[calc(100%-65px)]">
 							<div className="w-0 h-0" ref={ref}></div>
 							{messages[messageIndex]?.message.map((key: any, position: number) => {
 								return (

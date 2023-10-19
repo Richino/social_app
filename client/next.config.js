@@ -4,6 +4,12 @@ const nextConfig = {
 	
 	images: {
 		domains: ["firebasestorage.googleapis.com", "cloudflare-ipfs.com"],
+      remotePatterns:[
+         {
+            protocol: "https",
+            hostname: "firebasestorage.googleapis.com"
+         }
+      ]
 	},
 	env: {
 		url: "http://localhost:4000",

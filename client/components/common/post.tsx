@@ -370,12 +370,11 @@ export function Popup(props: Popup) {
 
 //main component
 export default function Post(props: IPost) {
-	const mediaQuery = window.matchMedia("(max-width: 600px)");
 	const postImageContainer2Ref = useRef<HTMLDivElement>(null);
 	const [loading, setLoading] = useState(false);
 	const [width, setWidth] = useState(window.innerWidth);
 	const [imageLoaded, setImageLoaded] = useState(false);
-	const [picWidth, setPicWidth] = useState(0);
+	const [picWidth, setPicWidth] = useState("w-auto");
 	const { setPost, user, comments, setComments, userPost, setUser, userProfile, setUserProfile, popup, setPopup, setErrorMessage, setErrorOpen } = useContext(App);
 
 	async function fetchData() {
@@ -445,8 +444,7 @@ export default function Post(props: IPost) {
 					},
 				});
 				setPopup(false);
-			})
-			
+			});
 	}
 
 	function hidePost(e: any) {
@@ -463,8 +461,14 @@ export default function Post(props: IPost) {
 		img.onload = () => {
 			const imageWidth = img.width;
 			const imageHeight = img.height;
+			console.log(imageHeight, imageWidth);
+
 			setImageLoaded(true);
-			imageHeight > imageWidth ? (imageHeight > 2000 ? setPicWidth(450) : setPicWidth(500)) : setPicWidth(1000);
+			imageHeight > imageWidth
+				? setPicWidth("w-[35%] aspect-[5/7]")
+				: imageHeight === imageWidth
+				? setPicWidth("aspect-square w-[50%]")
+				: setPicWidth("aspect-video w-[80%]");
 		};
 		const handleResize = () => {
 			setWidth(window.innerWidth);
@@ -523,8 +527,8 @@ export default function Post(props: IPost) {
 					<div
 						ref={postImageContainer2Ref}
 						id="post-image-container-2"
-						className={`post-image-container flex  h-[800px] ${picWidth} relative  items-center justify-center p-5 transition-width phone:max-h-[calc(100svh-148px)]  phone:min-h-[calc(100svh-148px)] phone:w-full phone:bg-white phone:p-0 phone:dark:bg-black`}>
-						<ImageTag style={{ objectFit: "contain" }} priority id="post-image" src={props.post} alt="post" fill sizes="(max-width:1100px) 100vw" />
+						className={`post-image-container flex   ${picWidth} relative  items-center justify-center  p-5 transition-width phone:max-h-[calc(100svh-148px)]  phone:min-h-[calc(100svh-148px)] phone:w-full phone:bg-white phone:p-0 phone:dark:bg-black`}>
+						<ImageTag  style={{ objectFit: "cover" }} priority id="post-image" src={props.post} alt="post" fill sizes="(max-width:1100px) 100vw" />
 					</div>
 				) : (
 					<div className={`grid place-items-center text-2xl phone:max-h-[calc(100svh-148px)] phone:min-h-[calc(100svh-148px)] phone:w-full phone:dark:bg-black`}>
