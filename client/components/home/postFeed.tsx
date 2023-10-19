@@ -31,7 +31,7 @@ export default function PostFeed(props: PostFeedProps) {
 			</div>
 
 			<div className="relative h-[398px] w-[398px] overflow-hidden bg-black hover:cursor-pointer phone:w-full" onClick={handlePostClick}>
-				<Image src={props.post} alt="post" style={{ objectFit: "cover" }} fill priority sizes="(max-width:400px) 100vw" />
+				<Image src={props.post} alt="post" style={{ objectFit: "cover" }} fill priority sizes="(max-width: 400px) 100vw" />
 			</div>
 
 			<div className="flex items-center justify-between p-3 py-2">
