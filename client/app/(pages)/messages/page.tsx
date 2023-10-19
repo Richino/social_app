@@ -10,7 +10,7 @@ import io from "socket.io-client";
 import axios from "axios";
 
 export default function Page() {
-	const { user, setList, messages, messageIndex, setMessageIndex, list, setMessages, messageId } = useContext(App);
+	const { user, setList, messages, messageIndex, setMessageIndex,  setMessages, messageId } = useContext(App);
 
 	const [text, setText] = useState("");
 	const ref = useRef<HTMLDivElement>(null);
@@ -29,7 +29,7 @@ export default function Page() {
 	async function fetchData() {
 		try {
 			const res = await instance.get("/messages");
-			let data: Array<any> = res.data.reverse();
+			let data: Array<any> = res.data;
 			if (messageId.length > 0) {
 				let userIndex = data.findIndex((key: any) => key._id === messageId);
 				setMessageIndex(userIndex);

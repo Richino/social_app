@@ -3,8 +3,6 @@ import { Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 const secret = process.env["SECRET"];
 
-//possible to has the cookie
-
 export default function auth(req: any, res: Response, next: NextFunction) {
 	const auth = req.cookies.auth;
    console.log(auth, " in auth");

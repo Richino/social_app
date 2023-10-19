@@ -4,55 +4,24 @@ import connectDB from "../config/mongodb.js";
 import { Message } from "../models/model.js";
 import { ObjectId } from "mongodb";
 
-async function updateUserMessages(messages: any, id_1: any, id_2: any, client: any) {
-	if (messages !== undefined) {
-		const containsObjectId = messages.map((objId: any) => objId.toString()).includes(id_2.toString());
+async function updateMessagesInUserCollection(client: any, userId: any, messageArray: any, recipientId: any) {
+	const containsObjectId = messageArray.map((objId) => objId.toString()).includes(recipientId.toString());
 
-		if (!containsObjectId) {
-         console.log(1);
-         
-			console.log(id_1, id_2, "sender: ", id_1);
-			await client
-				.collection("users")
-				.updateOne({ _id: id_1 }, { $push: { messages: { $each: [id_2], $position: 0 } } })
-				.catch((err) => console.log(err.message));
-		} else {
-         console.log(2);
-         
-			let array = [...messages];
-			const ID = id_1;
+	let updatedArray = [...messageArray];
 
-			let index = array.findIndex((item) => item.toString() === ID.toString());
-			if (index !== -1) {
-				let id = array.splice(index, 1)[0];
-				array.unshift(id);
-
-				await client
-					.collection("users")
-					.updateOne(
-						{ _id: id_1 },
-						{
-							$set: {
-								messages: array,
-							},
-						}
-					)
-					.then(() => {
-						console.log("Message updated successfully - sender");
-					})
-					.catch((err) => {
-						console.log(err.message);
-					});
-			} else {
-				console.log("Message not found in the array.");
-			}
-		}
+	if (!containsObjectId) {
+		updatedArray.unshift(recipientId);
 	} else {
-		await client
-			.collection("users")
-			.updateOne({ _id: id_1 }, { $push: { messages: { $each: [id_2], $position: 0 } } })
-			.catch((err) => console.log(err.message));
+		const index = updatedArray.findIndex((item) => item.toString() === recipientId.toString());
+		if (index !== -1) {
+			updatedArray.splice(index, 1);
+			updatedArray.unshift(recipientId);
+		} else {
+			console.log("Message not found in the array.");
+		}
 	}
+
+	return client.collection("users").updateOne({ _id: userId }, { $set: { messages: updatedArray } });
 }
 
 function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>) {
@@ -107,7 +76,7 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 					message: data.message,
 					readBy: [socket["user"].toString()],
 				});
-				message.save(async (err, res) => {
+				message.save(async (_, res) => {
 					const [senderUser, recepientUser] = await Promise.all([
 						client
 							.collection("users")
@@ -142,11 +111,18 @@ function Messages(io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMa
 					]);
 
 					let sender = senderUser[0];
-					let recepient = recepientUser[0];
+					let recipient = recepientUser[0];
 
-					await updateUserMessages(sender["messages"], res["sender"], res["recipient"], client);
-					await updateUserMessages(recepient["messages"], res["recipient"], res["sender"], client);
+					if (sender["messages"] !== undefined && recipient["messages"] !== undefined) {
+						const senderPromise = updateMessagesInUserCollection(client, res["sender"], sender["messages"], res["recipient"]);
+						const recipientPromise = updateMessagesInUserCollection(client, res["recipient"], recipient["messages"], res["sender"]);
 
+						await Promise.all([senderPromise, recipientPromise]);
+					} else if (sender["messages"] !== undefined) {
+						await updateMessagesInUserCollection(client, res["sender"], sender["messages"], res["recipient"]);
+					} else if (recipient["messages"] !== undefined) {
+						await updateMessagesInUserCollection(client, res["recipient"], recipient["messages"], res["sender"]);
+					}
 					delete res["__v"];
 					delete res["createdAt"];
 					const msg = { index: data.index, message: res, id: data.sender, recipient: data.id };

@@ -3,7 +3,6 @@ import { storage } from "../config/firebase.js";
 import { Router, Response } from "express";
 import connectDB from "../config/mongodb.js";
 import { v4 as uuidv4 } from "uuid";
-//import { IRequest } from "../interfaces";
 import auth from "../auth/index.js";
 import "dotenv/config";
 import multer from "multer";

@@ -81,6 +81,14 @@ router.get("/", auth, (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 },
             },
             {
+                $addFields: {
+                    orderIndex: { $indexOfArray: [messages, "$_id"] }
+                }
+            },
+            {
+                $sort: { orderIndex: 1 }
+            },
+            {
                 $project: {
                     fullname: 1,
                     avatar: 1,

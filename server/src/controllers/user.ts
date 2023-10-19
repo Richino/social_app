@@ -1,5 +1,4 @@
-import { Router, Request, Response } from "express";
-//import { IRequest } from "../interfaces/index.js";
+import { Router,  Response } from "express";
 import connectDB from "../config/mongodb.js";
 import "dotenv/config";
 import { ObjectId } from "mongodb";

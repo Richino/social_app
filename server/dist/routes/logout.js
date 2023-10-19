@@ -11,7 +11,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 const router = Router();
-router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/", (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     const token = jwt.sign({ id: "" }, process.env["SECRET"], {
         expiresIn: "1ms",
     });

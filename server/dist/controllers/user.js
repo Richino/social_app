@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { Router } from "express";
-//import { IRequest } from "../interfaces/index.js";
 import connectDB from "../config/mongodb.js";
 import "dotenv/config";
 import { ObjectId } from "mongodb";

@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, {  Response, NextFunction } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import http from "http";
@@ -30,7 +30,7 @@ const io = new Server(server, {
 });
 
 //config
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((_, res: Response, next: NextFunction) => {
 	res.header("Access-Control-Allow-Origin", process.env["PRODUCTION_URL"]);
 	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
 	res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");

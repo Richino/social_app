@@ -1,11 +1,8 @@
 
 import { Router, Response } from "express";
 import connectDB from "../config/mongodb.js";
-
-//import { IRequest } from "../interfaces";
 import auth from "../auth/index.js";
 import "dotenv/config";
-
 import { ObjectId } from "mongodb";
 const router = Router();
 
