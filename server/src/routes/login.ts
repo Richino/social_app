@@ -6,7 +6,7 @@ import "dotenv/config";
 const router = Router();
 
 router.post("/", async (req: Request, res: Response) => {
-	let { email, password } = req.body;
+	let { email, password, staySignin } = req.body;
 	if (!password.length && !email.length) return res.status(400).send("Email and Password fields cannot be empty");
 	if (!email.length) return res.status(400).send("Email field cannot be empty");
 	if (!password.length) return res.status(400).send("Password field cannot be empty");
@@ -26,11 +26,13 @@ router.post("/", async (req: Request, res: Response) => {
 			expiresIn: "2d",
 		});
 
+		const pastExpirationDate = new Date(0);
+		const expiration = staySignin ? new Date(Date.now() + 2 * 24 * 60 * 60 * 1000) : pastExpirationDate;
 		res.cookie("auth", token, {
 			httpOnly: true,
 			secure: true,
 			sameSite: "none",
-			maxAge: 2 * 24 * 60 * 60 * 1000,
+			expires: expiration,
 			domain: ".momentswelive.app",
 		});
 

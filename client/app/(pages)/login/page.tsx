@@ -14,6 +14,7 @@ export default function Page() {
 	const [data, setData] = useState({
 		email: "",
 		password: "",
+		staySignin: false,
 	});
 	const instance = axios.create({
 		baseURL: process.env.NEXT_PUBLIC_URL,
@@ -89,6 +90,7 @@ export default function Page() {
 								onClick={(e) => {
 									e.preventDefault();
 									setChecked(!isChecked);
+									setData({ ...data, staySignin: !isChecked });
 								}}>
 								<div className={`m-[2px] h-5 w-5 rounded-full bg-white  transition-transform ${isChecked ? "translate-x-4" : "translate-x-0"}`} />
 							</button>
