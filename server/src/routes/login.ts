@@ -26,13 +26,11 @@ router.post("/", async (req: Request, res: Response) => {
 			expiresIn: "2d",
 		});
 
-		const pastExpirationDate = new Date(0);
-		const expiration = staySignin ? new Date(Date.now() + 2 * 24 * 60 * 60 * 1000) : pastExpirationDate;
 		res.cookie("auth", token, {
 			httpOnly: true,
 			secure: true,
 			sameSite: "none",
-			expires: expiration,
+			maxAge: staySignin ? 2 * 24 * 60 * 60 * 1000 : undefined,
 			domain: ".momentswelive.app",
 		});
 

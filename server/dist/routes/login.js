@@ -14,7 +14,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 const router = Router();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let { email, password } = req.body;
+    let { email, password, staySignin } = req.body;
     if (!password.length && !email.length)
         return res.status(400).send("Email and Password fields cannot be empty");
     if (!email.length)
@@ -40,7 +40,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             httpOnly: true,
             secure: true,
             sameSite: "none",
-            maxAge: 2 * 24 * 60 * 60 * 1000,
+            maxAge: staySignin ? 2 * 24 * 60 * 60 * 1000 : undefined,
             domain: ".momentswelive.app",
         });
         //fixed
