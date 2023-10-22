@@ -2,7 +2,7 @@
 
 MySocialApp is a social media platform that allows users to connect, share, and interact with each other. This application is built using Next.js for the frontend, Express for the backend, Firebase Storage for file storage, and MongoDB as the database.
 
-![MySocialApp Screenshot](./screenshot.png)
+![MySocialApp Screenshot](./screenshots/1.png)
 
 ## Features
 
