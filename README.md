@@ -63,14 +63,14 @@ Follow these steps to get the project up and running on your local machine:
     cd frontend
     npm run dev
     cd ../backend
-    npm start
+    npm run dev
     ```
 
 6. **Visit the app:**
 
-    Open your web browser and go to `http://localhost:3000` to see the app in action.
-   username:
-   password:
+   Open your web browser and go to `http://localhost:3000` to see the app in action.
+   username: usertest@gmail.com
+   password: usertest123
 
 ## Deployment
 
