@@ -19,7 +19,7 @@ MySocialApp is a social media platform that allows users to connect, share, and 
 ## Technologies Used
 
 - **Frontend:** Next.js, React, Tailwind CSS.
-- **Backend:** Express.js, WebSocket for real-time updates.
+- **Backend:** Express.js, WebSocket for real-time messages.
 - **Database:** MongoDB for storing user data and posts.
 - **Storage:** Firebase Storage for image uploads.
 - **Authentication:** JWT for authentication.
