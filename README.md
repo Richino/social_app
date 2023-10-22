@@ -49,13 +49,13 @@ Follow these steps to get the project up and running on your local machine:
 
     - Create a Firebase project and obtain your Firebase configuration.
     - Set the Firebase configuration in `server/src/config/firebase.ts`.
-    - You can store the config in a .env file
+    - You can store the config in a .env file.
 
 4. **Set up MongoDB:**
 
     - Make sure you have MongoDB installed and running.
     - Set the MongoDB connection URI in `server/src/config/mongodb.ts`.
-    - - You can store the config in a .env file
+    - You can store the config in a .env file
 
 5. **Start the development servers:**
 
