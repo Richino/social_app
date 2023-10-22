@@ -11,9 +11,8 @@ MySocialApp is a social media platform that allows users to connect, share, and 
 - **Posts:** Users can create, edit, and delete posts.
 - **Comments:** Users can comment on posts.
 - **Image Upload:** Upload and store images using Firebase Storage.
-- **Real-Time Updates:** Real-time updates using WebSocket for likes, comments, and posts.
+- **Real-Time Messages:** Real-time updates when you message a user.
 - **Follow System:** Users can follow and be followed by other users.
-- **Notifications:** Get notifications for new followers and likes.
 - **Search:** Search for users and posts.
 - **Responsive Design:** A mobile-friendly and responsive user interface.
 
@@ -23,7 +22,7 @@ MySocialApp is a social media platform that allows users to connect, share, and 
 - **Backend:** Express.js, WebSocket for real-time updates.
 - **Database:** MongoDB for storing user data and posts.
 - **Storage:** Firebase Storage for image uploads.
-- **Authentication:** Firebase Authentication for user sign-up and login.
+- **Authentication:** JWT for authentication.
 
 ## Getting Started
 
