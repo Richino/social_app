@@ -48,12 +48,14 @@ Follow these steps to get the project up and running on your local machine:
 3. **Set up Firebase:**
 
     - Create a Firebase project and obtain your Firebase configuration.
-    - Set the Firebase configuration in `backend/config/firebaseConfig.js`.
+    - Set the Firebase configuration in `server/src/config/firebase.ts`.
+    - You can store the config in a .env file
 
 4. **Set up MongoDB:**
 
     - Make sure you have MongoDB installed and running.
-    - Set the MongoDB connection URI in `backend/config/db.js`.
+    - Set the MongoDB connection URI in `server/src/config/mongodb.ts`.
+    - - You can store the config in a .env file
 
 5. **Start the development servers:**
 
@@ -67,10 +69,12 @@ Follow these steps to get the project up and running on your local machine:
 6. **Visit the app:**
 
     Open your web browser and go to `http://localhost:3000` to see the app in action.
+   username:
+   password:
 
 ## Deployment
 
-To deploy this application to a production environment, follow the deployment guides for Next.js and Express.js. Additionally, make sure to secure your environment variables and database connections.
+The frontend has been deployed to vercel while the backend has been deployed to railway
 
 ## License
 
@@ -80,5 +84,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Special thanks to the open-source community for their valuable contributions.
 - Inspired by various social media platforms.
-
-Feel free to customize and expand this README to suit your specific project and provide additional information as needed.
